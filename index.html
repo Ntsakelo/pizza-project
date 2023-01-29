@@ -1,189 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <script src="https://kit.fontawesome.com/4f065757a2.js" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script
+      src="https://kit.fontawesome.com/4f065757a2.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <title>Mama's Pizza || online store</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="topBar">
-            <div class="name">
-             <h2>Mama's Pizza</h2>
-             <!-- <p class="cartCount">1</p> -->
-             <i class="fa-solid fa-cart-shopping shoppingCart"></i>
-            </div>
-            <div class="navigation-small">
-               <i class="fa-solid  fa-bars navBtn"></i>
-               <i class="fa-solid fa-x closeBtn" id="closeBtn"></i>
-               <i class="fa-solid fa-user profile"></i>
-               <p class="loginStatus">Sign in</p>
-            </div>
-            <div class="navigation-big">
-               <a class="navLink homeLnk" href="#home">Home</a>
-               <a class="navLink abtLnk" href="#about">About</a>
-               <a class="navLink menuLnk" href="#menu">Menu</a>
-               <a class="navLink orderLnk" href="#">Orders</a>
-               <a class="navLink galleryLnk" href="#gallery">Gallery</a>
-               <i class="fa-solid fa-user profile"></i>
-               <p class="loginStatus">Sign in</p>
-            </div>
-            <aside class="smallScreenMenu">
-                <a class="navLink homeLnk" href="#home">Home</a>
-                <a class="navLink abtLnk" href="#about">About</a>
-                <a class="navLink menuLnk" href="#menu">Menu</a>
-                <a class="navLink orderLnk" href="#">Orders</a>
-                <a class="navLink galleryLnk" href="#gallery">Gallery</a>
-               
-            </aside>
-            <div class="user hide">
-                <div class="login">
-                  <form action="" class="loginForm userForm">
-                   <input type="text" class="loginEmail userDetails" placeholder="Email address">
-                   <input type="password" class="LoginPassword userDetails" placeholder="Password">
-                   <button type="button" class="loginBtn userBtn">SIGN IN</button>
-                   <a href="#" class="goToRegister userLink">Don't have an account</a>                   
-                  </form>
-                </div>
-                <div class="register">
-                 <form action="" class="registerForm userForm">
-                    <input type="text" class="firstName userDetails" placeholder="Firstname">
-                    <input type="text" class="lastName userDetails" placeholder="Lastname">
-                    <input type="text" class="registerEmail userDetails" placeholder="Email address">
-                    <input type="text" class="registerPassword userDetails" placeholder="Password">
-                    <button type="text" class="registerBtn userBtn">REGISTER</button>
-                    <a href="#" class="goToLogin userLink">Already have an account</a>
-                 </form>
-                </div>
-            </div>
+      <div class="topBar">
+        <div class="name">
+          <h2>Mama's Pizza</h2>
+          <!-- <p class="cartCount">1</p> -->
+          <i class="fa-solid fa-cart-shopping shoppingCart"></i>
         </div>
-    <div class="homeSection" id="home">
+        <div class="navigation-small">
+          <i class="fa-solid fa-bars navBtn"></i>
+          <i class="fa-solid fa-x closeBtn" id="closeBtn"></i>
+          <i class="fa-solid fa-user profile"></i>
+          <p class="loginStatus">Sign in</p>
+        </div>
+        <div class="navigation-big">
+          <a class="navLink homeLnk" href="#home">Home</a>
+          <a class="navLink abtLnk" href="#about">About</a>
+          <a class="navLink menuLnk" href="#menu">Menu</a>
+          <a class="navLink orderLnk" href="#">Orders</a>
+          <a class="navLink galleryLnk" href="#gallery">Gallery</a>
+          <i class="fa-solid fa-user profile"></i>
+          <p class="loginStatus">Sign in</p>
+        </div>
+        <aside class="smallScreenMenu">
+          <a class="navLink homeLnk" href="#home">Home</a>
+          <a class="navLink abtLnk" href="#about">About</a>
+          <a class="navLink menuLnk" href="#menu">Menu</a>
+          <a class="navLink orderLnk" href="#">Orders</a>
+          <a class="navLink galleryLnk" href="#gallery">Gallery</a>
+        </aside>
+        <div class="user hide">
+          <div class="login">
+            <form action="" class="loginForm userForm">
+              <input
+                type="text"
+                class="loginEmail userDetails"
+                placeholder="Email address"
+              />
+              <input
+                type="password"
+                class="LoginPassword userDetails"
+                placeholder="Password"
+              />
+              <button type="button" class="loginBtn userBtn">SIGN IN</button>
+              <a href="#" class="goToRegister userLink"
+                >Don't have an account</a
+              >
+            </form>
+          </div>
+          <div class="register">
+            <form action="" class="registerForm userForm">
+              <input
+                type="text"
+                class="firstName userDetails"
+                placeholder="Firstname"
+              />
+              <input
+                type="text"
+                class="lastName userDetails"
+                placeholder="Lastname"
+              />
+              <input
+                type="text"
+                class="registerEmail userDetails"
+                placeholder="Email address"
+              />
+              <input
+                type="text"
+                class="registerPassword userDetails"
+                placeholder="Password"
+              />
+              <button type="text" class="registerBtn userBtn">REGISTER</button>
+              <a href="#" class="goToLogin userLink">Already have an account</a>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="homeSection" id="home">
         <div class="home">
-         <h3>Wala!</h3>
-         <h1>Enjoy our fresh pizzas </h1>
-         <p>We take pride in the quality that we provide to our customers. We have the best interest for our customers at heart. We have an unparalleled taste when it comes to our ingredients of choice.</p>
-         <button type="button" class="goToMenuBtn Btn">CHECK OUR MENU</button>
+          <h3>Wala!</h3>
+          <h1>Enjoy our fresh pizzas</h1>
+          <p>
+            We take pride in the quality that we provide to our customers. We
+            have the best interest for our customers at heart. We have an
+            unparalleled taste when it comes to our ingredients of choice.
+          </p>
+          <button type="button" class="goToMenuBtn Btn">CHECK OUR MENU</button>
         </div>
         <div class="homeImage">
-       <img class="pizzaHomeImg" src="./images/pizza-home.jpg" alt="pizza home image">
+          <img
+            class="pizzaHomeImg"
+            src="./images/pizza-home.jpg"
+            alt="pizza home image"
+          />
         </div>
-         
-    </div>
-    <div class="aboutSection" id="about">
-      <div class="abtText">
-        <h3>About our</h3>
-        <p>Pizza</p>
-         <p id="pizzaText">
-          Since we started operation in 2000, we have distinguished our recipes to suite the needs of our customers. We maintain a good relationship with our suppliers and therefore our standard has been consistent to this day.
-          <br>
-          <br>
-          Our pizzas are reach in herbs,spicy sources and vegetables. This is to ensure that we keep to the health standards of our customers while providing the best taste that we remain in the mouths for years.
-         </p>
-         <button type="button" class="viewFullMenuBtn Btn">VIEW FULL MENU</button>
       </div>
-      <div class="abtImg">
-       <img class="pizzaAbtImg" src="./images/abt-img.jpg" alt="pizza about image">
+      <div class="aboutSection" id="about">
+        <div class="abtText">
+          <h3>About our</h3>
+          <p>Pizza</p>
+          <p id="pizzaText">
+            Since we started operation in 2000, we have distinguished our
+            recipes to suite the needs of our customers. We maintain a good
+            relationship with our suppliers and therefore our standard has been
+            consistent to this day.
+            <br />
+            <br />
+            Our pizzas are reach in herbs,spicy sources and vegetables. This is
+            to ensure that we keep to the health standards of our customers
+            while providing the best taste that we remain in the mouths for
+            years.
+          </p>
+          <button type="button" class="viewFullMenuBtn Btn">
+            VIEW FULL MENU
+          </button>
+        </div>
+        <div class="abtImg">
+          <img
+            class="pizzaAbtImg"
+            src="./images/abt-img.jpg"
+            alt="pizza about image"
+          />
+        </div>
       </div>
-    </div>
-    <div class="menuSection" id="menu">
+      <div class="menuSection" id="menu">
         <h1 class="menuHead">Menu</h1>
         <section class="pizzaSection">
-            <div class="pizzaList">
-             <div class="pizza">
-              <img class="pizzaImg" src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg" alt="Cheese pizza">
+          <div class="pizzaList">
+            <div class="pizza">
+              <img
+                class="pizzaImg"
+                src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg"
+                alt="Cheese pizza"
+              />
               <p class="pizzaName">Cheeese Bacon</p>
-               <p class="price">Small
-                <br>
+              <p class="price">
+                Small
+                <br />
                 R22.00
-               </p>
-               <p class="price">Medium
-                <br>
+              </p>
+              <p class="price">
+                Medium
+                <br />
                 R48.00
-               </p>
-               <p class="price">Large
-                <br>
+              </p>
+              <p class="price">
+                Large
+                <br />
                 R99.00
-               </p>
-               <p class="ingredients">Bacon,Cheese,Chicken Saurce</p>
-               <button type="button" class="addToBasketBtn">ADD TO BASKET</button>
-             </div>
-             <div class="pizza">
-                <img class="pizzaImg" src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg" alt="Cheese pizza">
-                <p class="pizzaName">Cheeese Bacon</p>
-                 <p class="price">Small
-                  <br>
-                  R22.00
-                 </p>
-                 <p class="price">Medium
-                  <br>
-                  R48.00
-                 </p>
-                 <p class="price">Large
-                  <br>
-                  R99.00
-                 </p>
-                 <p class="ingredients">Bacon,Cheese,Chicken Saurce</p>
-                 <button type="button" class="addToBasketBtn">ADD TO BASKET</button>
-             </div>
-             <div class="pizza">
-                <img class="pizzaImg" src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg" alt="Cheese pizza">
-                <p class="pizzaName">Cheeese Bacon</p>
-                 <p class="price">Small
-                  <br>
-                  R22.00
-                 </p>
-                 <p class="price">Medium
-                  <br>
-                  R48.00
-                 </p>
-                 <p class="price">Large
-                  <br>
-                  R99.00
-                 </p>
-                 <p class="ingredients">Bacon,Cheese,Chicken Saurce</p>
-                 <button type="button" class="addToBasketBtn">ADD TO BASKET</button>
-             </div>
-             <div class="pizza">
-                <img class="pizzaImg" src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg" alt="Cheese pizza">
-                <p class="pizzaName">Cheeese Bacon</p>
-                 <p class="price">Small
-                  <br>
-                  R22.00
-                 </p>
-                 <p class="price">Medium
-                  <br>
-                  R48.00
-                 </p>
-                 <p class="price">Large
-                  <br>
-                  R99.00
-                 </p>
-                 <p class="ingredients">Bacon,Cheese,Chicken Saurce</p>
-                 <button type="button" class="addToBasketBtn">ADD TO BASKET</button>
-             </div>
+              </p>
+              <p class="ingredients">Bacon,Cheese,Chicken Saurce</p>
+              <button type="button" class="addToBasketBtn">
+                ADD TO BASKET
+              </button>
             </div>
+            <div class="pizza">
+              <img
+                class="pizzaImg"
+                src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg"
+                alt="Cheese pizza"
+              />
+              <p class="pizzaName">Cheeese Bacon</p>
+              <p class="price">
+                Small
+                <br />
+                R22.00
+              </p>
+              <p class="price">
+                Medium
+                <br />
+                R48.00
+              </p>
+              <p class="price">
+                Large
+                <br />
+                R99.00
+              </p>
+              <p class="ingredients">Bacon,Cheese,Chicken Saurce</p>
+              <button type="button" class="addToBasketBtn">
+                ADD TO BASKET
+              </button>
+            </div>
+            <div class="pizza">
+              <img
+                class="pizzaImg"
+                src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg"
+                alt="Cheese pizza"
+              />
+              <p class="pizzaName">Cheeese Bacon</p>
+              <p class="price">
+                Small
+                <br />
+                R22.00
+              </p>
+              <p class="price">
+                Medium
+                <br />
+                R48.00
+              </p>
+              <p class="price">
+                Large
+                <br />
+                R99.00
+              </p>
+              <p class="ingredients">Bacon,Cheese,Chicken Saurce</p>
+              <button type="button" class="addToBasketBtn">
+                ADD TO BASKET
+              </button>
+            </div>
+            <div class="pizza">
+              <img
+                class="pizzaImg"
+                src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg"
+                alt="Cheese pizza"
+              />
+              <p class="pizzaName">Cheeese Bacon</p>
+              <p class="price">
+                Small
+                <br />
+                R22.00
+              </p>
+              <p class="price">
+                Medium
+                <br />
+                R48.00
+              </p>
+              <p class="price">
+                Large
+                <br />
+                R99.00
+              </p>
+              <p class="ingredients">Bacon,Cheese,Chicken Saurce</p>
+              <button type="button" class="addToBasketBtn">
+                ADD TO BASKET
+              </button>
+            </div>
+          </div>
         </section>
-    </div>
-    <div class="gallerySection" id="gallery">
-      <h1 class="galleryHead">Gallery</h1> 
-      <div class="galleryImages">
-       <div class="gallery">
-        <img class="gallImg" src="https://images.pexels.com/photos/708587/pexels-photo-708587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
-       </div>
-       <div class="gallery">
-        <img class="gallImg" src="https://images.pexels.com/photos/2909822/pexels-photo-2909822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
-       </div>
-       <div class="gallery">
-        <img class="gallImg" src="https://images.pexels.com/photos/1458426/pexels-photo-1458426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
-       </div>
-      </div> 
-    </div>
+      </div>
+      <div class="gallerySection" id="gallery">
+        <h1 class="galleryHead">Gallery</h1>
+        <div class="galleryImages">
+          <div class="gallery">
+            <img
+              class="gallImg"
+              src="https://images.pexels.com/photos/708587/pexels-photo-708587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt=""
+            />
+          </div>
+          <div class="gallery">
+            <img
+              class="gallImg"
+              src="https://images.pexels.com/photos/2909822/pexels-photo-2909822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt=""
+            />
+          </div>
+          <div class="gallery">
+            <img
+              class="gallImg"
+              src="https://images.pexels.com/photos/1458426/pexels-photo-1458426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>
-               
