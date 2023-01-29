@@ -1,68 +1,51 @@
-const smallScreenMenu = document.querySelector('.smallScreenMenu');
-const navBtn = document.querySelector('.navBtn');
-const closeBtn = document.querySelector('.closeBtn');
-const userPage = document.querySelector('.user');
-const loginSection = document.querySelector('.login');
-const registerSection = document.querySelector('.register');
-const showRegister = document.querySelector('.goToRegister');
-const showLogin = document.querySelector('.goToLogin');
-const navLinks = document.querySelectorAll('.navLink');
-const userBtn = document.querySelectorAll('.profile')
+import { Express } from "express";
+import pgPromise from "pg-promise";
+import bodyParser from "body-parser";
+import PizzaData from "./pizzaData.js";
+import PizzaApi from "./API/pizza-api.js";
+import PizzaRoutes from "./routes/pizzaRoutes.js";
+import session from "express-session";
+import flash from "express-flash";
 
+const pgp = pgPromise();
 
-navBtn.addEventListener('click',function(){
-    if(userPage.classList.contains('show')){
-        userPage.classList.remove('show');
-        userPage.classList.add('hide');
-    }
-    smallScreenMenu.classList.remove('hideMenu');
-   smallScreenMenu.classList.add('showMenu');
-   navBtn.setAttribute('style','display:none');
-   closeBtn.setAttribute('style','display:block');  
-})
+const DATABASE_URL =
+  process.env.DATABASE_URL ||
+  "postgresql://coder:pg123@localhost:5432/pizza_catalogue";
 
-closeBtn.addEventListener('click',function(){
-    if(userPage.classList.contains('show')){
-        userPage.classList.remove('show');
-        userPage.classList.add('hide');
-    }
-    smallScreenMenu.classList.remove('showMenu')
-    smallScreenMenu.classList.add('hideMenu');
-    navBtn.setAttribute('style','display:block');
-    closeBtn.setAttribute('style','display:none')
+const config = {
+  connectionString: DATABASE_URL,
+};
 
-})
-showRegister.addEventListener('click',function(){
-    loginSection.classList.remove('show');
-    loginSection.classList.add('hide');
-    registerSection.classList.remove('hide');
-    registerSection.classList.add('show')
-})
+if (process.env.NODE_ENV == "production") {
+  config.ssl = {
+    rejectUnauthorized: false,
+  };
+}
 
-showLogin.addEventListener('click',function(){
-    loginSection.classList.remove('hide');
-    loginSection.classList.add('show');
-    registerSection.classList.remove('show');
-    registerSection.classList.add('hide')
-})
+const db = pgp(config);
 
-navLinks.forEach(link=>{
-    link.addEventListener('click',function(){
-        if(userPage.classList.contains('show')){
-            userPage.classList.remove('show');
-            userPage.classList.add('hide');
-        }
-    })
-})
-userBtn.forEach(btn=>{
-    btn.addEventListener('click',function(){
-        if(smallScreenMenu.classList.contains('showMenu')){
-            smallScreenMenu.classList.remove('showMenu');
-            smallScreenMenu.classList.add('hideMenu')
-            navBtn.setAttribute('style','display:block');
-            closeBtn.setAttribute('style','display:none')
-        }
-        userPage.classList.remove('hide');
-        userPage.classList.add('show')
-    })
-})
+const app = express();
+app.use(cookieParser());
+app.use(express.json());
+app.use(cors());
+app.use(
+  session({
+    secret: "<add a secret string here>",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(flash());
+app.engine("handlebars", handlebars.engine({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
+
+app.use(express.static("public"));
+
+const pizzaData = PizzaData(db);
+const pizzaApi = PizzaApi(pizzaData);
+const pizzaRoutes = PizzaRoutes(pizzaData);
