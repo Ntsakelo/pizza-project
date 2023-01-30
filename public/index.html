@@ -92,6 +92,7 @@
         </div>
       </div>
       <div class="catalogueSection">
+        <h3 class="catHead">My Menu</h3>
         <div class="catalogueList">
         <div class="catalogueItem">
           <img class="catImg" src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg" alt="catalogue item image">
@@ -143,119 +144,133 @@
         </div>
         </div>
         <div class="itemsTotals">
+          <h3 class="totalsHead">Items receipt</h3>
+          <div class="subTotals">
+            <div class="itemSubTotal">
+             <p class="item">Bacon cheese</p>
+              <p class="subTotal">R100.00</p>
+            </div>
+          </div>
+          <div class="total">
+           <h4 class="totalh">Total</h4>
+           <h4 class="TOTAL">R200.00</h4>
+          </div>
+          <button type="button" class="goTochckOutBtn">PROCEED TO CHECKOUT</button>
+        </div>
+      </div>
+      <div class="main hide">
+        <div class="homeSection" id="home">
+          <div class="home">
+            <h3>Wala!</h3>
+            <h1>Enjoy our fresh pizzas</h1>
+            <p>
+              We take pride in the quality that we provide to our customers. We
+              have the best interest for our customers at heart. We have an
+              unparalleled taste when it comes to our ingredients of choice.
+            </p>
+            <button type="button" class="goToMenuBtn Btn">CHECK OUR MENU</button>
+          </div>
+          <div class="homeImage">
+            <img
+              class="pizzaHomeImg"
+              src="./images/pizza-home.jpg"
+              alt="pizza home image"
+            />
+          </div>
+        </div>
+  
+        <div class="aboutSection" id="about">
+          <div class="abtText">
+            <h3>About our</h3>
+            <p>Pizza</p>
+            <p id="pizzaText">
+              Since we started operation in 2000, we have distinguished our
+              recipes to suite the needs of our customers. We maintain a good
+              relationship with our suppliers and therefore our standard has been
+              consistent to this day.
+              <br />
+              <br />
+              Our pizzas are reach in herbs,spicy sources and vegetables. This is
+              to ensure that we keep to the health standards of our customers
+              while providing the best taste that we remain in the mouths for
+              years.
+            </p>
+            <button type="button" class="viewFullMenuBtn Btn">
+              VIEW FULL MENU
+            </button>
+          </div>
+          <div class="abtImg">
+            <img
+              class="pizzaAbtImg"
+              src="./images/abt-img.jpg"
+              alt="pizza about image"
+            />
+          </div>
+        </div>
+        <script type="text/x-template" class="menuTemplate">
+          {{#each item}}
+          <div class="pizza">
+               <img
+                 class="pizzaImg"
+                 src={{this.image_url}}
+                 alt="Cheese pizza"
+               />
+               <p class="pizzaName" id={{this.id}}>{{this.product}}</p>
+               <p class="price smallPrice" id={{this.small_price}}>
+                 Small
+                 <br />
+                 R{{this.small_price}}
+               </p>
+               <p class="price mediumPrice" id={{this.medium_price}}>
+                 Medium
+                 <br />
+                 R{{this.medium_price}}
+               </p>
+               <p class="price largePrice" id={{this.large_price}}>
+                 Large
+                 <br />
+                 R{{this.large_price}}
+               </p>
+               <p class="ingredients">{{this.ingredients}}</p>
+               <button type="button" class="addToBasketBtn" id={{this.id}}>
+                 ADD TO BASKET
+               </button>
+             </div>
+             {{/each}}
+        </script>
+        <div class="menuSection" id="menu">
+          <h1 class="menuHead">Menu</h1>
+          <section class="pizzaSection">
+            <div class="pizzaList"></div>
+          </section>
+        </div>
+        <div class="gallerySection" id="gallery">
+          <h1 class="galleryHead">Gallery</h1>
+          <div class="galleryImages">
+            <div class="gallery">
+              <img
+                class="gallImg"
+                src="https://images.pexels.com/photos/708587/pexels-photo-708587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt=""
+              />
+            </div>
+            <div class="gallery">
+              <img
+                class="gallImg"
+                src="https://images.pexels.com/photos/2909822/pexels-photo-2909822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt=""
+              />
+            </div>
+            <div class="gallery">
+              <img
+                class="gallImg"
+                src="https://images.pexels.com/photos/1458426/pexels-photo-1458426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
 
-        </div>
-      </div>
-      <div class="homeSection" id="home">
-        <div class="home">
-          <h3>Wala!</h3>
-          <h1>Enjoy our fresh pizzas</h1>
-          <p>
-            We take pride in the quality that we provide to our customers. We
-            have the best interest for our customers at heart. We have an
-            unparalleled taste when it comes to our ingredients of choice.
-          </p>
-          <button type="button" class="goToMenuBtn Btn">CHECK OUR MENU</button>
-        </div>
-        <div class="homeImage">
-          <img
-            class="pizzaHomeImg"
-            src="./images/pizza-home.jpg"
-            alt="pizza home image"
-          />
-        </div>
-      </div>
-
-      <div class="aboutSection" id="about">
-        <div class="abtText">
-          <h3>About our</h3>
-          <p>Pizza</p>
-          <p id="pizzaText">
-            Since we started operation in 2000, we have distinguished our
-            recipes to suite the needs of our customers. We maintain a good
-            relationship with our suppliers and therefore our standard has been
-            consistent to this day.
-            <br />
-            <br />
-            Our pizzas are reach in herbs,spicy sources and vegetables. This is
-            to ensure that we keep to the health standards of our customers
-            while providing the best taste that we remain in the mouths for
-            years.
-          </p>
-          <button type="button" class="viewFullMenuBtn Btn">
-            VIEW FULL MENU
-          </button>
-        </div>
-        <div class="abtImg">
-          <img
-            class="pizzaAbtImg"
-            src="./images/abt-img.jpg"
-            alt="pizza about image"
-          />
-        </div>
-      </div>
-      <script type="text/x-template" class="menuTemplate">
-        {{#each item}}
-        <div class="pizza">
-             <img
-               class="pizzaImg"
-               src={{this.image_url}}
-               alt="Cheese pizza"
-             />
-             <p class="pizzaName" id={{this.id}}>{{this.product}}</p>
-             <p class="price smallPrice" id={{this.small_price}}>
-               Small
-               <br />
-               R{{this.small_price}}
-             </p>
-             <p class="price mediumPrice" id={{this.medium_price}}>
-               Medium
-               <br />
-               R{{this.medium_price}}
-             </p>
-             <p class="price largePrice" id={{this.large_price}}>
-               Large
-               <br />
-               R{{this.large_price}}
-             </p>
-             <p class="ingredients">{{this.ingredients}}</p>
-             <button type="button" class="addToBasketBtn" id={{this.id}}>
-               ADD TO BASKET
-             </button>
-           </div>
-           {{/each}}
-      </script>
-      <div class="menuSection" id="menu">
-        <h1 class="menuHead">Menu</h1>
-        <section class="pizzaSection">
-          <div class="pizzaList"></div>
-        </section>
-      </div>
-      <div class="gallerySection" id="gallery">
-        <h1 class="galleryHead">Gallery</h1>
-        <div class="galleryImages">
-          <div class="gallery">
-            <img
-              class="gallImg"
-              src="https://images.pexels.com/photos/708587/pexels-photo-708587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt=""
-            />
-          </div>
-          <div class="gallery">
-            <img
-              class="gallImg"
-              src="https://images.pexels.com/photos/2909822/pexels-photo-2909822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt=""
-            />
-          </div>
-          <div class="gallery">
-            <img
-              class="gallImg"
-              src="https://images.pexels.com/photos/1458426/pexels-photo-1458426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt=""
-            />
-          </div>
-        </div>
       </div>
     </div>
 

@@ -370,25 +370,26 @@ html {
 /* Catalogue section */
 .catalogueSection{
   width: 100%;
-  height: 100%;
-  /* overflow: auto; */
-  border-top: 1px solid grey;
+   height: 100%;
+   overflow-y: auto; 
   position:fixed;
   z-index: 100;
-  top: 100px;
+  top: 0px;
   left:0px;
   background-color: white;
   /* margin-top:20px; */
 }
+.catHead{
+  margin-left:20px;
+  color:grey;
+  font-size: 30px
+}
 .catalogueList{
-  /* border: 1px solid green; */
+
   width: 50%;
   margin-top: 20px;
   display: inline;
   float:left;
-/* border: 1px solid red; */
-height: 500px;
-  overflow-y: auto;
 }
 .itemsTotals{
   width: 45%;
@@ -422,7 +423,7 @@ height: 500px;
 .itemName{
   color:rgb(115, 115, 115);
   font-family: 'Ephesis',cursive;
-  font-size: 25px;
+  font-size: 30px;
   
 }
 .itemPrice{
@@ -437,6 +438,55 @@ height: 500px;
 }
 .increaseBtn,.decreaseBtn,.itemPrice{
   margin-bottom:10px;
+}
+/* totals */
+.subTotals{
+  height: 320px;
+  overflow: auto;
+}
+.item,.subTotal,.totalsHead{
+  color: grey;
+  margin-left:10px;
+}
+.item,.subTotal{
+  display:inline;
+}
+.item{
+  float:left;
+}
+.subTotal{
+  float:right;
+  margin-right:10px;
+}
+.total{
+  display:block;
+  border-bottom:1px solid rgb(171, 169, 169);
+  height: 50px;
+}
+.totalh,.TOTAL{
+  display:inline;
+}
+.totalh{
+  float:left;
+  margin-left:10px;
+}
+.TOTAL{
+  float:right;
+   margin-right:10px;
+}
+.goTochckOutBtn{
+  display: block;
+  margin: auto;
+  margin-top:20px;
+  background-color: orange;
+  color: white;
+  border:none;
+  height: 30px;
+}
+.goTochckOutBtn:hover,
+.increaseBtn:hover,
+.decreaseBtn:hover{
+  cursor: pointer;
 }
 @keyframes show {
   100% {
