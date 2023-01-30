@@ -367,6 +367,77 @@ html {
 .hide {
   display: none;
 }
+/* Catalogue section */
+.catalogueSection{
+  width: 100%;
+  height: 100%;
+  /* overflow: auto; */
+  border-top: 1px solid grey;
+  position:fixed;
+  z-index: 100;
+  top: 100px;
+  left:0px;
+  background-color: white;
+  /* margin-top:20px; */
+}
+.catalogueList{
+  /* border: 1px solid green; */
+  width: 50%;
+  margin-top: 20px;
+  display: inline;
+  float:left;
+/* border: 1px solid red; */
+height: 500px;
+  overflow-y: auto;
+}
+.itemsTotals{
+  width: 45%;
+  display: inline;
+  float:right;
+  height: 500px;
+  /* border: 1px solid tomato; */
+  margin-right:20px;
+  margin-top: 20px;
+  box-shadow:5px 5px 5px 5px rgb(204, 204, 204);
+}
+.catalogueItem{
+  box-shadow:5px 5px 5px 5px rgb(204, 204, 204);
+  height: 200px;
+}
+.catImg{
+  width:200px;
+  height:150px;
+  margin-top: 20px;
+}
+.itemQtyValue{
+  width: 30px;
+  text-align:center;
+  color: grey;
+}
+.increaseBtn,.decreaseBtn{
+  background-color: orange;
+  color:white;
+  border:1px solid orange;
+}
+.itemName{
+  color:rgb(115, 115, 115);
+  font-family: 'Ephesis',cursive;
+  font-size: 25px;
+  
+}
+.itemPrice{
+  color: grey;
+}
+.itemSize{
+  background-color: rgb(163, 163, 163);
+  color:white;
+  /* text-align: center; */
+  width: 100px;
+
+}
+.increaseBtn,.decreaseBtn,.itemPrice{
+  margin-bottom:10px;
+}
 @keyframes show {
   100% {
     transform: rotate(360deg);
@@ -436,6 +507,39 @@ html {
     display: inline;
     float: right;
   }
+  .catImg{
+    /* display:block;
+    margin:auto; */
+    /* margin-top: 20px; */
+    height: 100px;
+    width:100px;
+  }
+  .itemDetails{
+    display:inline-block;
+  }
+  .catalogueList{
+    width:100%;
+    display: block;
+    float:none;
+    margin:auto;
+  }
+  .itemsTotals{
+   width: 95%; 
+  
+   margin-right:0px;
+   display:block;
+   float:none;
+   margin:auto;
+   margin-top:20px;
+
+  }
+  .catalogueItem{
+    width: 95%;
+    display:block;
+    margin:auto;
+    margin-top:20px;
+   
+  }
 }
 @media screen and (width: 280px) {
   .gallery {
@@ -476,5 +580,12 @@ html {
   .abtText p,
   .abtText button {
     margin-left: 50px;
+  }
+  .itemDetails{
+    display:inline-block;
+  }
+  .catalogueItem{
+    margin-left:20px;
+    margin-bottom:20px;
   }
 }
