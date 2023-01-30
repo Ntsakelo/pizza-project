@@ -26,7 +26,7 @@ create table catalogue(
     product_id int not null,
     session_id text not null,
     size text not null,
-    price text not null,
+    price decimal not null,
     qty int not null,
     foreign key(product_id) references products(id) on delete cascade
 );

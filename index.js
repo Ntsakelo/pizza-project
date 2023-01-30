@@ -51,6 +51,7 @@ const pizzaApi = PizzaApi(pizzaData);
 const pizzaRoutes = PizzaRoutes(pizzaData);
 
 app.get("/api/menu", pizzaApi.allPizzas);
+app.post('/api/addToCatalogue',pizzaApi.addPizza)
 
 const port = process.env.PORT || 5012;
 app.listen(port, function () {

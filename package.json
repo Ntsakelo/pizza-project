@@ -33,7 +33,8 @@
     "express-flash": "^0.0.2",
     "express-handlebars": "^6.0.7",
     "express-session": "^1.17.3",
-    "pg-promise": "^11.2.0"
+    "pg-promise": "^11.2.0",
+    "short-unique-id": "^4.4.4"
   },
   "devDependencies": {
     "mocha": "^10.2.0"
