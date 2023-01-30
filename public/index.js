@@ -93,14 +93,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const addButtons = document.querySelectorAll(".addToBasketBtn");
     pizzaPrices.forEach((price) => {
       price.addEventListener("click", function () {
-        selectedPrice = price.id;
+        selectedPrice = Number(price.id);
+   
       });
     });
     addButtons.forEach((btn) => {
       btn.addEventListener("click", function () {
         productId = btn.id;
         axios.post('/api/addToCatalogue',{productId,selectedPrice,qty}).then(results=>{
-          alert('added to basket')
+         
         })
       });
     });
