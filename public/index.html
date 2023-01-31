@@ -91,10 +91,34 @@
           </div>
         </div>
       </div>
-      <div class="catalogueSection">
-        <h3 class="catHead">My Menu</h3>
+      <script type="text/x-template" class="catalogueTemplate">
+        {{#if cartItems}}
+        {{#each cartItems}}
+        <div class="catalogueItem">
+          <img class="catImg" src={{this.image_url}} alt="catalogue item image">
+          <div class="itemDetails">
+            <p class="itemName">{{this.product}}</p>
+            <p class="itemSize">{{this.size}}</p>
+            <p class="itemPrice">R{{this.price}}</p>
+            <button type="button" class="decreaseBtn" id={{this.id}}>-</button>
+            <input type="number" class="itemQtyValue" value={{this.qty}} disabled>
+            <button type="button" class="increaseBtn" id={{this.id}}>+</button>
+          </div>
+          <i class="fa-solid fa-trash-can removeBtn" id={{this.id}}></i>
+        </div>
+        {{/each}}
+        {{else}}
+         <p>No items added yet.add items to your cart</p>
+         {{/if}}
+      </script>
+      <div class="catalogueSection hide">
+        <div class="top">
+          <h3 class="catHead">My Menu</h3>
+          <a href="#" class="goHome">Go home</a>
+
+        </div>
         <div class="catalogueList">
-        <div class="catalogueItem">
+        <!-- <div class="catalogueItem">
           <img class="catImg" src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg" alt="catalogue item image">
           <div class="itemDetails">
             <p class="itemName">Bacon Cheese</p>
@@ -103,45 +127,9 @@
             <button type="button" class="decreaseBtn">-</button>
             <input type="number" class="itemQtyValue" value="0" disabled>
             <button type="button" class="increaseBtn">+</button>
-
           </div>
-        </div>
-        <div class="catalogueItem">
-          <img class="catImg" src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg" alt="catalogue item image">
-          <div class="itemDetails">
-            <p class="itemName">Bacon Cheese</p>
-            <p class="itemSize">Medium</p>
-            <p class="itemPrice">R100.00</p>
-            <button type="button" class="decreaseBtn">-</button>
-            <input type="number" class="itemQtyValue" value="0" disabled>
-            <button type="button" class="increaseBtn">+</button>
-
-          </div>
-        </div>
-        <div class="catalogueItem">
-          <img class="catImg" src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg" alt="catalogue item image">
-          <div class="itemDetails">
-            <p class="itemName">Bacon Cheese</p>
-            <p class="itemSize">Medium</p>
-            <p class="itemPrice">R100.00</p>
-            <button type="button" class="decreaseBtn">-</button>
-            <input type="number" class="itemQtyValue" value="0" disabled>
-            <button type="button" class="increaseBtn">+</button>
-
-          </div>
-        </div>
-        <div class="catalogueItem">
-          <img class="catImg" src="https://cdn.pixabay.com/photo/2016/03/05/21/47/american-1239091_960_720.jpg" alt="catalogue item image">
-          <div class="itemDetails">
-            <p class="itemName">Bacon Cheese</p>
-            <p class="itemSize">Medium</p>
-            <p class="itemPrice">R100.00</p>
-            <button type="button" class="decreaseBtn">-</button>
-            <input type="number" class="itemQtyValue" value="0" disabled>
-            <button type="button" class="increaseBtn">+</button>
-
-          </div>
-        </div>
+          <i class="fa-solid fa-trash-can"></i>
+        </div> -->
         </div>
         <div class="itemsTotals">
           <h3 class="totalsHead">Items receipt</h3>
@@ -158,7 +146,7 @@
           <button type="button" class="goTochckOutBtn">PROCEED TO CHECKOUT</button>
         </div>
       </div>
-      <div class="main hide">
+      <div class="main">
         <div class="homeSection" id="home">
           <div class="home">
             <h3>Wala!</h3>

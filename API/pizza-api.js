@@ -29,8 +29,45 @@ export default function (pizzaData) {
       next(err)
     }
   }
+  async function showMyCartItems(req,res,next){
+    try{
+      let sessionId = req.session.user;
+         let results = await pizzaData.myCartItems(sessionId);
+         res.json({
+          data: results,
+          status: 'success'
+         })
+    }catch(err){
+      next(err)
+    }
+  }
+  async function updateQty(req,res,next){
+  try{
+    let qty = req.body.newValue;
+    let id = req.body.id;
+    await pizzaData.updateItemQty(qty,id);
+  }catch(err){
+    next(err)
+  }
+  }
+  async function removeItem(req,res,next){
+    try{
+       let id = req.params.id;
+       let sessionId = req.session.user
+      let results = await pizzaData.removeFromCart(id,sessionId);
+       res.json({
+        data: results,
+        status: "success"
+       })
+    }catch(err){
+      next(err)
+    }
+  }
   return {
     allPizzas,
-    addPizza
+    addPizza,
+    showMyCartItems,
+    updateQty,
+    removeItem
   };
 }

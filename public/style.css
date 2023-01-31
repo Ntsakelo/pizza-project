@@ -379,16 +379,22 @@ html {
   background-color: white;
   /* margin-top:20px; */
 }
+.top{
+  border: 1px solid transparent;
+  height: 100px;
+}
 .catHead{
   margin-left:20px;
   color:grey;
-  font-size: 30px
+  font-size: 30px;
+  display:inline;
+  float:left;
+ 
 }
 .catalogueList{
-
   width: 50%;
   margin-top: 20px;
-  display: inline;
+  display:inline;
   float:left;
 }
 .itemsTotals{
@@ -406,9 +412,10 @@ html {
   height: 200px;
 }
 .catImg{
-  width:200px;
-  height:150px;
+  width:100px;
+  height:100px;
   margin-top: 20px;
+  border-radius: 50%;
 }
 .itemQtyValue{
   width: 30px;
@@ -416,9 +423,9 @@ html {
   color: grey;
 }
 .increaseBtn,.decreaseBtn{
-  background-color: orange;
+  background-color: grey;
   color:white;
-  border:1px solid orange;
+  border:1px solid grey;
 }
 .itemName{
   color:rgb(115, 115, 115);
@@ -483,9 +490,32 @@ html {
   border:none;
   height: 30px;
 }
-.goTochckOutBtn:hover,
+.goTochckOutBtn:hover{
+  cursor: pointer;
+}
 .increaseBtn:hover,
-.decreaseBtn:hover{
+.decreaseBtn:hover
+{
+  cursor: pointer;
+  background-color: orange;
+  border: 1px solid orange;
+}
+.fa-trash-can:hover{
+  color:orange;
+}
+.goHome{
+  float: right;
+  margin-right: 20px;
+  margin-top: 40px;
+  color: orange;
+}
+.fa-trash-can{
+  float: right;
+  margin-right: 20px;
+  margin-top: 170px;
+  color: grey;
+}
+.fa-trash-can:hover{
   cursor: pointer;
 }
 @keyframes show {
@@ -588,8 +618,10 @@ html {
     display:block;
     margin:auto;
     margin-top:20px;
+    /* height: 200px; */
    
   }
+
 }
 @media screen and (width: 280px) {
   .gallery {
@@ -599,6 +631,9 @@ html {
     display: block;
     width: 100%;
     margin: auto;
+  }
+  .fa-trash-can{
+    display: none;
   }
 }
 @media screen and (min-width: 768px) {
