@@ -244,7 +244,7 @@ html {
 .pizza {
   height: 500px;
   width: 400px;
-  border: 2px solid orange;
+  border: 1px solid orange;
   display: inline-block;
   margin-right: 20px;
   margin-bottom: 20px;
@@ -397,6 +397,10 @@ html {
   display:inline;
   float:left;
 }
+.noItems{
+  margin-left: 20px;
+  color: grey;
+}
 .itemsTotals{
   width: 45%;
   display: inline;
@@ -451,6 +455,13 @@ html {
   height: 320px;
   overflow: auto;
 }
+
+.itemSubTotal{
+  display:block;
+  border: 1px solid transparent;
+  height: 50px;
+  margin-bottom:10px;
+}
 .item,.subTotal,.totalsHead{
   color: grey;
   margin-left:10px;
@@ -469,6 +480,8 @@ html {
   display:block;
   border-bottom:1px solid rgb(171, 169, 169);
   height: 50px;
+  /* border: 1px solid black; */
+  /* margin-top: 100px; */
 }
 .totalh,.TOTAL{
   display:inline;
@@ -518,6 +531,7 @@ html {
 .fa-trash-can:hover{
   cursor: pointer;
 }
+
 @keyframes show {
   100% {
     transform: rotate(360deg);

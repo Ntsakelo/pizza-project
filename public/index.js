@@ -12,8 +12,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const catalogueSection = document.querySelector('.catalogueSection');
   const main = document.querySelector('.main');
   const cartBtn = document.querySelector('.shoppingCart');
-  const homeLink = document.querySelector('.goHome'); 
-
+  const homeLink = document.querySelector('.goHome');
+  const homeSection = document.querySelector('.homeSection');
+  const container = document.querySelector('.container');
+  const navigation = document.querySelector('.topBar') 
+ console.log(homeSection.scrollHeight)
+ window.addEventListener('scroll',function(){
+  if(this.window.scrollY >= 613){
+    navigation.setAttribute('style','background-image:url("./images/prism.png")')
+    navigation.setAttribute('style','color:white');
+  }    
+  
+ })
+ console.log(container.scrollTop)
   navBtn.addEventListener("click", function () {
     if (userPage.classList.contains("show")) {
       userPage.classList.remove("show");
@@ -86,6 +97,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const pizzaList = document.querySelector(".pizzaList");
   const catalogueTemplate = document.querySelector('.catalogueTemplate')
   const catalogueList = document.querySelector('.catalogueList');
+  const itemSubTotal = document.querySelector('.itemSubTotal')
+  const subTotals = document.querySelector('.subTotals')
+  const total = document.querySelector('.TOTAL')
 
   function displayPizzas() {
     axios.get("/api/menu").then((results) => {
@@ -101,14 +115,16 @@ document.addEventListener("DOMContentLoaded", function () {
           price.classList.add("currentPrice");
         }
       });
-      myMenuDetails(pizzaPrices);
+      myMenuDetails();
     });
   }
-  function myMenuDetails(pizzaPrices) {
+  let itemTot;
+  function myMenuDetails() {
     let selectedPrice = "";
     let productId = "";
     let qty = 1;
     const addButtons = document.querySelectorAll(".addToBasketBtn");
+    const pizzaPrices = document.querySelectorAll(".price");
     pizzaPrices.forEach((price) => {
       price.addEventListener("click", function () {
         selectedPrice = Number(price.id);
@@ -118,12 +134,24 @@ document.addEventListener("DOMContentLoaded", function () {
     addButtons.forEach((btn) => {
       btn.addEventListener("click", function () {
         productId = btn.id;
+        subTotals.innerHTML = "";
         axios.post('/api/addToCatalogue',{productId,selectedPrice,qty}).then(results=>{
-         
+          let response = results.data;
+          let data = response.data;
+          let totAmnt = 0
+           data.forEach(item=>{
+            subTotals.innerHTML += `<div class='itemSubTotal'><p class='item' id=${item.product}>${item.product} X${item.qty}</p>
+            <p class='subTotal' id=${item.id}>R${item.price}</p></div>`;
+            totAmnt += Number(item.price);
+            total.innerHTML = `R${totAmnt}`
+          })
+          const subTotal = document.querySelectorAll('.subTotal')
+          itemTot = subTotal;
         })
       });
     });
   }
+
   function myCart(){
     cartBtn.addEventListener('click',function(){
       axios.get('/api/myCart').then(results=>{
@@ -133,15 +161,19 @@ document.addEventListener("DOMContentLoaded", function () {
         catalogueList.innerHTML = template({
           cartItems: data
         })
+       
         remove();
         updateQty();
       })
     })
   }
   function updateQty(){
-    const increaseBtns = document.querySelectorAll('.increaseBtn');
+    
+   const items = document.querySelectorAll('.item');
+   const subTotal = document.querySelectorAll('.subTotal')
+  const increaseBtns = document.querySelectorAll('.increaseBtn');
   const decreaseBtns = document.querySelectorAll('.decreaseBtn');
-  
+  const itemPrices = document.querySelectorAll('.itemPrice');
   const itemQtyValues = document.querySelectorAll('.itemQtyValue');
   for(let i=0;i<increaseBtns.length;i++){
     let increaseBtn = increaseBtns[i];
@@ -153,11 +185,24 @@ document.addEventListener("DOMContentLoaded", function () {
       axios.post('/api/myCart/update/qty',{newValue,id}).then(results=>{
         let response = results.data;
         let data = response.data;
-        catalogueList.innerHTML = "";
-        const template = Handlebars.compile(catalogueTemplate.innerHTML);
-        catalogueList.innerHTML = template({
-          cartItems: data
-        }) 
+        let itemsTotal = 0;
+        let currentItem = data.filter(item=>{
+          if(item.id === Number(id)){
+            return item
+          }
+        })
+        itemPrices[i].innerHTML = `R${currentItem[0].price}`
+        for(let i=0;i<itemTot.length;i++){
+          if(itemTot[i].id == currentItem[0].id){
+            itemTot[i].innerHTML = `R${currentItem[0].price}`;
+          }
+        }
+        data.forEach(item=>{
+           itemsTotal += Number(item.price);
+           total.innerHTML = "";
+          total.innerHTML += `R${itemsTotal}`;
+        })
+        //   remove();
       })
     })
   }
@@ -171,11 +216,25 @@ document.addEventListener("DOMContentLoaded", function () {
       axios.post('/api/myCart/update/qty',{newValue,id}).then(results=>{
         let response = results.data;
         let data = response.data;
-        catalogueList.innerHTML = "";
-        const template = Handlebars.compile(catalogueTemplate.innerHTML);
-        catalogueList.innerHTML = template({
-          cartItems: data
+        let itemsTotal = 0;
+        let currentItem = data.filter(item=>{
+          if(item.id === Number(id)){
+            return item
+          }
         })
+        itemPrices[i].innerHTML = `R${currentItem[0].price}`
+        for(let i=0;i<itemTot.length;i++){
+          if(itemTot[i].id == currentItem[0].id){
+            itemTot[i].innerHTML = `R${currentItem[0].price}`;
+          }
+        }
+        data.forEach(item=>{
+          itemsTotal += Number(item.price);
+          total.innerHTML = "";
+         total.innerHTML += `R${itemsTotal}`;
+       })
+  
+       //remove();
       })
     })
   }
@@ -188,19 +247,32 @@ document.addEventListener("DOMContentLoaded", function () {
         let id = removeBtn.id;
         axios.get(`/api/myCart/update/product/delete/${id}`).then(results=>{
           let response = results.data;
-          let data = response.data
-          let template = Handlebars.compile(catalogueTemplate.innerHTML);
-          catalogueList.innerHTML = template({
-            cartItems:data
-          })
-          updateQty();
+          let data = response.data;
+         
+          catalogueList.innerHTML = '';
+          let totAmnt = 0;
+         const template = Handlebars.compile(catalogueTemplate.innerHTML);
+         catalogueList.innerHTML = template({
+          cartItems:data
+         })
+         subTotals.innerHTML = "";
+         data.forEach(item=>{
+          subTotals.innerHTML += `<div class='itemSubTotal'><p class='item' id=${item.product}>${item.product} X${item.qty}</p>
+          <p class='subTotal' id=${item.id}>R${item.price}</p></div>`;
+          totAmnt += Number(item.price);
+          total.innerHTML = `R${totAmnt}`
         })
+        myCart();
+        updateQty();
+        myMenuDetails();
+        })
+        
       })
     }
    }
   displayPizzas();
   myCart();
-  remove();
+ // remove();
   updateQty();
   myMenuDetails();
 });

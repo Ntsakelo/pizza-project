@@ -21,8 +21,9 @@ export default function (pizzaData) {
         let qty = req.body.qty;
         let selectedPrice = req.body.selectedPrice;
         let sessionId = req.session.user;
-        await pizzaData.addToCatalogue(productId, sessionId,selectedPrice, qty)
+        let results = await pizzaData.addToCatalogue(productId, sessionId,selectedPrice, qty)
         res.json({
+          data: results,
           status: 'success'
         })
     }catch(err){
@@ -45,7 +46,13 @@ export default function (pizzaData) {
   try{
     let qty = req.body.newValue;
     let id = req.body.id;
-    await pizzaData.updateItemQty(qty,id);
+    let sessionId = req.session.user
+    let results = await pizzaData.updateItemQty(qty,id,sessionId);
+     res.json({
+      data: results,
+      status:'success'
+
+     })
   }catch(err){
     next(err)
   }
