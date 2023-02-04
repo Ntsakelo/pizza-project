@@ -64,8 +64,9 @@ export default function (pizzaData) {
       let results = await pizzaData.removeFromCart(id,sessionId);
        res.json({
         data: results,
-        status: "success"
+        status: "success",
        })
+     
     }catch(err){
       next(err)
     }

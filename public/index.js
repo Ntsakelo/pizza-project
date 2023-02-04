@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }    
   
  })
- console.log(container.scrollTop)
+ //console.log(container.scrollTop)
   navBtn.addEventListener("click", function () {
     if (userPage.classList.contains("show")) {
       userPage.classList.remove("show");
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
     axios.get("/api/menu").then((results) => {
       let response = results.data;
       let data = response.data;
-      const template = Handlebars.compile(menuTemplate.innerHTML);
+      let template = Handlebars.compile(menuTemplate.innerHTML);
       pizzaList.innerHTML = template({
         item: data,
       });
@@ -140,8 +140,9 @@ document.addEventListener("DOMContentLoaded", function () {
           let data = response.data;
           let totAmnt = 0
            data.forEach(item=>{
+            let itemPrice = Number(item.price)
             subTotals.innerHTML += `<div class='itemSubTotal'><p class='item' id=${item.product}>${item.product} X${item.qty}</p>
-            <p class='subTotal' id=${item.id}>R${item.price}</p></div>`;
+            <p class='subTotal' id=${item.id}>R${itemPrice.toFixed(2)}</p></div>`;
             totAmnt += Number(item.price);
             total.innerHTML = `R${totAmnt}`
           })
@@ -151,24 +152,22 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-
   function myCart(){
     cartBtn.addEventListener('click',function(){
       axios.get('/api/myCart').then(results=>{
         let response = results.data;
         let data = response.data;
-        const template = Handlebars.compile(catalogueTemplate.innerHTML);
+        let template = Handlebars.compile(catalogueTemplate.innerHTML);
         catalogueList.innerHTML = template({
           cartItems: data
         })
        
-        remove();
         updateQty();
+        remove();
       })
     })
   }
   function updateQty(){
-    
    const items = document.querySelectorAll('.item');
    const subTotal = document.querySelectorAll('.subTotal')
   const increaseBtns = document.querySelectorAll('.increaseBtn');
@@ -191,18 +190,19 @@ document.addEventListener("DOMContentLoaded", function () {
             return item
           }
         })
-        itemPrices[i].innerHTML = `R${currentItem[0].price}`
+        let itemPrice = Number(currentItem[0].price)
+        itemPrices[i].innerHTML = `R${itemPrice.toFixed(2)}`
         for(let i=0;i<itemTot.length;i++){
           if(itemTot[i].id == currentItem[0].id){
-            itemTot[i].innerHTML = `R${currentItem[0].price}`;
+            itemTot[i].innerHTML = `R${itemPrice.toFixed(2)}`;
           }
         }
         data.forEach(item=>{
            itemsTotal += Number(item.price);
            total.innerHTML = "";
-          total.innerHTML += `R${itemsTotal}`;
+          total.innerHTML += `R${itemsTotal.toFixed(2)}`;
         })
-        //   remove();
+    
       })
     })
   }
@@ -211,6 +211,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let qtyValue = itemQtyValues[i];
     decreaseBtn.addEventListener('click',function(){
       qtyValue.value--;
+      if(qtyValue.value <= 1){
+        qtyValue.value = 1;
+      }
       let newValue = qtyValue.value;
       let id = decreaseBtn.id;
       axios.post('/api/myCart/update/qty',{newValue,id}).then(results=>{
@@ -222,59 +225,68 @@ document.addEventListener("DOMContentLoaded", function () {
             return item
           }
         })
-        itemPrices[i].innerHTML = `R${currentItem[0].price}`
+        let itemPrice = Number(currentItem[0].price)
+        itemPrices[i].innerHTML = `R${itemPrice.toFixed(2)}`
         for(let i=0;i<itemTot.length;i++){
           if(itemTot[i].id == currentItem[0].id){
-            itemTot[i].innerHTML = `R${currentItem[0].price}`;
+            itemTot[i].innerHTML = `R${itemPrice.toFixed(2)}`;
           }
         }
         data.forEach(item=>{
           itemsTotal += Number(item.price);
           total.innerHTML = "";
-         total.innerHTML += `R${itemsTotal}`;
+         total.innerHTML += `R${itemsTotal.toFixed(2)}`;
        })
-  
-       //remove();
       })
     })
   }
-  }
-  function remove(){
+}
+function remove(){
     const removeBtns = document.querySelectorAll('.removeBtn');
     for(let i=0;i<removeBtns.length;i++){
       let removeBtn = removeBtns[i];
       removeBtn.addEventListener('click',function(){
         let id = removeBtn.id;
-        axios.get(`/api/myCart/update/product/delete/${id}`).then(results=>{
-          let response = results.data;
-          let data = response.data;
-         
-          catalogueList.innerHTML = '';
-          let totAmnt = 0;
-         const template = Handlebars.compile(catalogueTemplate.innerHTML);
-         catalogueList.innerHTML = template({
-          cartItems:data
-         })
-         subTotals.innerHTML = "";
-         data.forEach(item=>{
-          subTotals.innerHTML += `<div class='itemSubTotal'><p class='item' id=${item.product}>${item.product} X${item.qty}</p>
-          <p class='subTotal' id=${item.id}>R${item.price}</p></div>`;
-          totAmnt += Number(item.price);
-          total.innerHTML = `R${totAmnt}`
-        })
-        myCart();
-        updateQty();
-        myMenuDetails();
-        })
-        
+        axios.get(`/api/myCart/update/product/delete/${id}`).then(results=>{   
+        axios.get('/api/myCart').then(results=>{
+        let response = results.data;
+        let data = response.data;
+        let template = Handlebars.compile(catalogueTemplate.innerHTML);
+        catalogueList.innerHTML = template({
+        cartItems: data
+     })
+      let totAmnt = 0
+           subTotals.innerHTML = "";
+           if(data.length <= 0){
+            total.innerHTML = "R0.OO"
+           }
+           data.forEach(item=>{
+            subTotals.innerHTML += `<div class='itemSubTotal'><p class='item' id=${item.product}>${item.product} X${item.qty}</p>
+            <p class='subTotal' id=${item.id}>R${item.price}</p></div>`;
+            totAmnt += Number(item.price);
+            total.innerHTML = `R${totAmnt.toFixed(2)}`
+          })
+          const subTotal = document.querySelectorAll('.subTotal')
+          itemTot = subTotal;
+     updateQty();
+     remove();
+   })
+   updateQty();
+   remove();
+       })
+   
       })
     }
-   }
+  }
   displayPizzas();
+   myMenuDetails();
   myCart();
- // remove();
-  updateQty();
-  myMenuDetails();
-});
+ });
+    
+
+  
+
+        
+    
         
       

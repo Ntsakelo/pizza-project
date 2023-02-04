@@ -258,7 +258,6 @@ html {
 /*---pizza Menu */
 .menuSection {
   height: 100%;
-  border:1px solid red;
 }
 .menuHead,
 .galleryHead {
@@ -306,17 +305,21 @@ html {
   width: 70px;
   margin-top: 0px;
   margin-left: 5px;
-  outline: 1px solid orange;
+  outline: 1px solid rgb(24, 24, 24);
   color: grey;
 }
 .price:hover {
   cursor: pointer;
-  background-color: orange;
-  color: white;
+  /* background-color: orange;
+  color: white; */
+  background-color:rgb(24, 24, 24);
+  color:rgb(255, 187, 61);
 }
 .currentPrice {
-  background-color: orange;
-  color: white;
+  /* background-color: orange;
+  color: white; */
+    background-color:rgb(24, 24, 24);
+  color:rgb(255, 187, 61);
 }
 .ingredients {
   color: grey;
@@ -348,8 +351,10 @@ html {
   display: block;
   margin: auto;
   height: 30px;
-  background-color: orange;
-  color: white;
+  /* background-color: orange;
+  color: white; */
+    background-color:rgb(24, 24, 24);
+  color:rgb(255, 187, 61);
   border: none;
 }
 .addToBasketBtn:hover {
@@ -654,7 +659,6 @@ html {
   }
   .itemsTotals{
    width: 95%; 
-  
    margin-right:0px;
    display:block;
    float:none;
