@@ -97,10 +97,31 @@ document.addEventListener("DOMContentLoaded", function () {
   const pizzaList = document.querySelector(".pizzaList");
   const catalogueTemplate = document.querySelector('.catalogueTemplate')
   const catalogueList = document.querySelector('.catalogueList');
-  const itemSubTotal = document.querySelector('.itemSubTotal')
-  const subTotals = document.querySelector('.subTotals')
-  const total = document.querySelector('.TOTAL')
+  const itemSubTotal = document.querySelector('.itemSubTotal');
+  const subTotals = document.querySelector('.subTotals');
+  const total = document.querySelector('.TOTAL');
 
+  
+  function register(){
+    const firstNameFilled = document.querySelector('.firstName');
+    const lastNameFilled = document.querySelector('.lastName');
+    const registerEmailFilled = document.querySelector('.registerEmail');
+    const registerPasswordFilled = document.querySelector('.registerPassword');
+
+    let firstName = firstNameFilled.value;
+    let lastName = lastNameFilled.value;
+    let registerEmail = registerEmailFilled.value;
+    let registerPassword = registerPasswordFilled.value;
+
+    axios.post('/api/user/register',{firstName,lastName,registerEmail,registerPassword}).then(results =>{
+      
+    })
+  }
+  function login(){
+    const loginEmail = document.querySelector('.loginEmail');
+    const loginPassword = document.querySelector('.loginPassword')
+  
+  }
   function displayPizzas() {
     axios.get("/api/menu").then((results) => {
       let response = results.data;

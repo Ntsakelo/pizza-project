@@ -398,6 +398,9 @@ html {
   margin-top: 10px;
   color: grey;
 }
+.goToRegister,.goToLogin{
+  color:orange;
+}
 .register {
   display: none;
 }
@@ -569,6 +572,9 @@ html {
   color: grey;
 }
 .fa-trash-can:hover{
+  cursor: pointer;
+}
+.shoppingCart:hover{
   cursor: pointer;
 }
 
