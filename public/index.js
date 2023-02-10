@@ -93,6 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
     catalogueSection.classList.add('show');
   })
   //server side
+  const registerBtn = document.querySelector('.registerBtn');
+  const loginBtn = document.querySelector('.loginBtn');
   const menuTemplate = document.querySelector(".menuTemplate");
   const pizzaList = document.querySelector(".pizzaList");
   const catalogueTemplate = document.querySelector('.catalogueTemplate')
@@ -108,19 +110,37 @@ document.addEventListener("DOMContentLoaded", function () {
     const registerEmailFilled = document.querySelector('.registerEmail');
     const registerPasswordFilled = document.querySelector('.registerPassword');
 
-    let firstName = firstNameFilled.value;
-    let lastName = lastNameFilled.value;
-    let registerEmail = registerEmailFilled.value;
-    let registerPassword = registerPasswordFilled.value;
-
-    axios.post('/api/user/register',{firstName,lastName,registerEmail,registerPassword}).then(results =>{
-      
+    registerBtn.addEventListener('click',function(){
+      let firstName = firstNameFilled.value;
+      let lastName = lastNameFilled.value;
+      let registerEmail = registerEmailFilled.value;
+      let registerPassword = registerPasswordFilled.value;
+      axios.post('/api/user/register',{firstName,lastName,registerEmail,registerPassword}).then(results =>{
+         let response = results.data;
+         let data = response.status;
+         alert(data);
+      })
+      firstNameFilled.value = "";
+      lastNameFilled.value = "";
+      registerEmailFilled.value = "";
+      registerPasswordFilled.value = "";
     })
   }
-  function login(){
-    const loginEmail = document.querySelector('.loginEmail');
-    const loginPassword = document.querySelector('.loginPassword')
   
+  function login(){
+    const loginEmailFilled = document.querySelector('.loginEmail');
+    const loginPasswordFilled = document.querySelector('.loginPassword')
+    
+    loginBtn.addEventListener('click',function(){
+      let email = loginEmailFilled.value;
+      let password = loginPasswordFilled.value;
+      axios.post('/api/user/login',{email,password}).then(results =>{
+         let response = results.data;
+         let data = response.status;
+         alert(data);  
+      })
+
+    })
   }
   function displayPizzas() {
     axios.get("/api/menu").then((results) => {
@@ -302,6 +322,8 @@ function remove(){
   displayPizzas();
    myMenuDetails();
   myCart();
+  register();
+  login();
  });
     
 

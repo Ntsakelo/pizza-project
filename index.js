@@ -6,6 +6,9 @@ import PizzaApi from "./API/pizza-api.js";
 import PizzaRoutes from "./routes/pizzaRoutes.js";
 import session from "express-session";
 import flash from "express-flash";
+import * as dotenv from "dotenv";
+dotenv.config();
+import cookieParser from "cookie-parser";
 
 const pgp = pgPromise();
 
@@ -26,7 +29,7 @@ if (process.env.NODE_ENV == "production") {
 const db = pgp(config);
 
 const app = express();
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(express.json());
 // app.use(cors());
 app.use(
@@ -50,6 +53,8 @@ const pizzaData = PizzaData(db);
 const pizzaApi = PizzaApi(pizzaData);
 const pizzaRoutes = PizzaRoutes(pizzaData);
 
+app.post('/api/user/register',pizzaApi.register);
+app.post('/api/user/login',pizzaApi.login);
 app.get("/api/menu", pizzaApi.allPizzas);
 app.post('/api/addToCatalogue',pizzaApi.addPizza);
 app.get('/api/myCart',pizzaApi.showMyCartItems);

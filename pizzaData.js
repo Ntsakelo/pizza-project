@@ -1,4 +1,27 @@
 export default function pizzaData(db) {
+  async function checkUser(firstName,lastName,email,password){
+    try{
+        let results = await db.oneOrNone('select count(*) from customers where firstname = $1 and lastname = $2 and email = $3 and password = $4',[firstName,lastName,email,password]);
+        return results
+    }catch(err){
+     console.log(err)
+    }
+  }
+  async function registerUser(firstName,lastName,email,password){
+    try{
+       await db.none('insert into customers(firstname,lastname,email,password)values($1,$2,$3,$4)',[firstName,lastName,email,password]);
+    }catch(err){
+      console.log(err)
+    }
+  }
+  async function getUser(email){
+    try{
+       let results = await db.oneOrNone('select * from customers where email = $1',[email]);
+       return results;
+    }catch(err){
+      console.log(err)
+    }
+  }
   async function getAllPizzas() {
     try {
       return await db.manyOrNone("select * from products limit 6");
@@ -76,6 +99,9 @@ export default function pizzaData(db) {
   }
   //return
   return {
+    checkUser,
+    registerUser,
+    getUser,
     getAllPizzas,
     addToCatalogue,
     myCartItems,
