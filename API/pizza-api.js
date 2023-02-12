@@ -7,13 +7,16 @@ export default function (pizzaData) {
   let id = uid();
   async function register(req,res,next){
    try{
-       let firstName = req.body.firstName;
-       let lastName = req.body.lastName;
+       let username = req.body.firstName;
+       let userLstName = req.body.lastName;
        let email = req.body.registerEmail;
-       console.log(firstName,lastName,email);
+       
+       let firstName = username.charAt(0).toUpperCase() + username.slice(1);
+       let lastName = userLstName.charAt(0).toUpperCase() + userLstName.slice(1);
        let password = await  bcrypt.hash(req.body.registerPassword,10);
-       let results = await pizzaData.checkUser(firstName,lastName,email,password);
-       if(Number(results.count > 0)){
+       let results = await pizzaData.checkUser(firstName,lastName,email);
+       
+       if(results){
        return res.json({
           status: 'User already exists',
         })
@@ -34,7 +37,7 @@ export default function (pizzaData) {
        let customer = await pizzaData.getUser(email);
        if(!customer){
         return res.json({
-          status: "User not registered yet!"
+          status: "User does not have an account"
         })
        }
        else if(customer){

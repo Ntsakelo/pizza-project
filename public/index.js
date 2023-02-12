@@ -6,24 +6,21 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginSection = document.querySelector(".login");
   const registerSection = document.querySelector(".register");
   const showRegister = document.querySelector(".goToRegister");
-  const showLogin = document.querySelector(".goToLogin");
+  const registrationState = document.querySelector('.registrationState')
+  const showLogin = document.querySelectorAll(".goToLogin");
   const navLinks = document.querySelectorAll(".navLink");
   const userBtn = document.querySelectorAll(".profile");
   const catalogueSection = document.querySelector('.catalogueSection');
   const main = document.querySelector('.main');
   const cartBtn = document.querySelector('.shoppingCart');
   const homeLink = document.querySelector('.goHome');
-  const homeSection = document.querySelector('.homeSection');
-  const container = document.querySelector('.container');
-  const navigation = document.querySelector('.topBar') 
- console.log(homeSection.scrollHeight)
- window.addEventListener('scroll',function(){
-  if(this.window.scrollY >= 613){
-    navigation.setAttribute('style','background-image:url("./images/prism.png")')
-    navigation.setAttribute('style','color:white');
-  }    
+  const goTochckOutBtn = document.querySelector('.goTochckOutBtn');
+  const deliverySection = document.querySelector('.deliverySection');
+  // const homeSection = document.querySelector('.homeSection');
+  // const container = document.querySelector('.container');
+  // const navigation = document.querySelector('.topBar'); 
+ 
   
- })
  //console.log(container.scrollTop)
   navBtn.addEventListener("click", function () {
     if (userPage.classList.contains("show")) {
@@ -53,12 +50,17 @@ document.addEventListener("DOMContentLoaded", function () {
     registerSection.classList.add("show");
   });
 
-  showLogin.addEventListener("click", function () {
-    loginSection.classList.remove("hide");
-    loginSection.classList.add("show");
-    registerSection.classList.remove("show");
-    registerSection.classList.add("hide");
-  });
+  showLogin.forEach(btn=>{
+    btn.addEventListener("click", function () {
+      loginSection.classList.remove("hide");
+      loginSection.classList.add("show");
+      registerSection.classList.remove("show");
+      registerSection.classList.add("hide");
+      registrationState.classList.remove('show');
+      registrationState.classList.add('hide');
+    });
+
+  })
 
   navLinks.forEach((link) => {
     link.addEventListener("click", function () {
@@ -91,6 +93,13 @@ document.addEventListener("DOMContentLoaded", function () {
     main.classList.add('hide');
     catalogueSection.classList.remove('hide');
     catalogueSection.classList.add('show');
+    registrationState.classList.add('hide');
+  })
+  goTochckOutBtn.addEventListener('click',function(){
+    catalogueSection.classList.remove('show');
+    catalogueSection.classList.add('hide');
+    deliverySection.classList.remove('hide');
+    deliverySection.classList.add('show');
   })
   //server side
   const registerBtn = document.querySelector('.registerBtn');
@@ -102,23 +111,46 @@ document.addEventListener("DOMContentLoaded", function () {
   const itemSubTotal = document.querySelector('.itemSubTotal');
   const subTotals = document.querySelector('.subTotals');
   const total = document.querySelector('.TOTAL');
+  const errMsgs = document.querySelectorAll('.errMsg')
+  const loginError = document.querySelector('.loginError');
+  const registerError = document.querySelector('.registerError');
 
   
+  function hideErrMsg(){
+    errMsgs.forEach(msg=>{
+      msg.setAttribute('style','display:none')
+    })
+  }
+  hideErrMsg();
   function register(){
     const firstNameFilled = document.querySelector('.firstName');
     const lastNameFilled = document.querySelector('.lastName');
     const registerEmailFilled = document.querySelector('.registerEmail');
     const registerPasswordFilled = document.querySelector('.registerPassword');
-
     registerBtn.addEventListener('click',function(){
-      let firstName = firstNameFilled.value;
-      let lastName = lastNameFilled.value;
-      let registerEmail = registerEmailFilled.value;
-      let registerPassword = registerPasswordFilled.value;
+      let firstName = firstNameFilled.value.toLowerCase();
+      let lastName = lastNameFilled.value.toLowerCase();
+      let registerEmail = registerEmailFilled.value.toLowerCase();
+      let registerPassword = registerPasswordFilled.value.toLowerCase();
+      if(!firstName || !lastName || !registerEmail || !registerPassword){
+         registerError.setAttribute('style','display:block');
+         registerError.innerHTML = "Please enter all details";
+         setTimeout(hideErrMsg,3000);
+         return
+      }
       axios.post('/api/user/register',{firstName,lastName,registerEmail,registerPassword}).then(results =>{
          let response = results.data;
          let data = response.status;
-         alert(data);
+         if(data === "Succesfully registered"){
+          registrationState.classList.remove('hide');
+          registrationState.classList.add('show');
+          return;
+         }
+         else if(data !== "Succesfully registered"){
+         registerError.setAttribute('style','display:block');
+         registerError.innerHTML = data;
+         setTimeout(hideErrMsg,10000);
+         }
       })
       firstNameFilled.value = "";
       lastNameFilled.value = "";
@@ -134,10 +166,16 @@ document.addEventListener("DOMContentLoaded", function () {
     loginBtn.addEventListener('click',function(){
       let email = loginEmailFilled.value;
       let password = loginPasswordFilled.value;
+      if(!email || !password){
+         loginError.setAttribute('style','display:block');
+         loginError.innerHTML = "Please enter all details";
+         setTimeout(hideErrMsg,3000);
+         return
+      }
       axios.post('/api/user/login',{email,password}).then(results =>{
          let response = results.data;
          let data = response.status;
-         alert(data);  
+         
       })
 
     })

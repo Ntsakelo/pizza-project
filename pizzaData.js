@@ -1,7 +1,7 @@
 export default function pizzaData(db) {
-  async function checkUser(firstName,lastName,email,password){
+  async function checkUser(firstName,lastName,email){
     try{
-        let results = await db.oneOrNone('select count(*) from customers where firstname = $1 and lastname = $2 and email = $3 and password = $4',[firstName,lastName,email,password]);
+        let results = await db.oneOrNone('select * from customers where firstname = $1 and lastname = $2 and email = $3',[firstName,lastName,email]);
         return results
     }catch(err){
      console.log(err)
