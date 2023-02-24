@@ -41,10 +41,16 @@ html {
   font-size: 30px;
 }
 .cartCount {
-  display: inline;
-  float: right;
-
-  margin-right: 30px;
+  position:relative;
+  top:-27px;
+  right:-10px;
+  /* border: 1px solid red; */
+  text-align: center;
+  border-radius: 50%;
+  font-size:20px;
+  color:orange;
+  background-color: white;
+  width: 20px;
 }
 .profile {
   float: right;
@@ -53,12 +59,16 @@ html {
   font-size: 30px;
   margin-bottom: 20px;
   color: orange;
+  position:relative;
+  right:-50px;
 }
 .loginStatus {
   display: inline;
   float: right;
   margin-right: 5px;
   color: rgb(121, 120, 120);
+  position:relative;
+  right:-40px;
 }
 .profile:hover {
   cursor: pointer;
@@ -278,7 +288,7 @@ html {
 .pizza {
   height: 500px;
   width: 400px;
-  border: 1px solid rgb(24, 24, 24);
+  box-shadow:1px 1px 1px 1px rgb(200, 193, 193);
   display: inline-block;
   margin-right: 20px;
   margin-bottom: 20px;
@@ -606,6 +616,10 @@ text-align:center;
   margin-right: 20px;
   margin-top: 40px;
   color: orange;
+   font-size: 30px;
+}
+.goHome:hover{
+  cursor:pointer;
 }
 .fa-trash-can{
   float: right;
@@ -628,24 +642,164 @@ text-align:center;
   top: 0px;
   left:0px;
   background-color: white;
-  border: 1px solid red;
+  text-align: center;
+  
+
 }
-.deliveryHead{
+.deliveryHead,.paymentHead{
   color:grey;
   margin-left: 10px;
   margin-right: 10px;
-  border-bottom: 1px solid grey;
+  margin-bottom: 10px;
+  /* border-bottom: 1px solid grey; */
+  text-align: center;
 }
 .deliveryForm{
   margin-left:10px;
   margin-right:10px;
   text-align: center;
-  border: 1px solid red;
+  width: 100%;
+  height: 500px;
+  display:inline-block;
+  position: relative;
 }
-.deliveryDetails{
+.formContent{
+  box-shadow: 1px 1px 1px 1px rgb(190, 190, 190);
+  width: 49%;
+  height: 580px;
+  display:inline-block;
+}
+.paymentDetails{
+ width:49%;
+ height: 500px;
+ display:inline-block;
+ margin-right:20px;
+ position: relative;
+ box-shadow: 1px 1px 1px 1px rgb(190, 190, 190);
+
+}
+.creditType{
+  text-align: left;
+  width:70%;
+  height: 30px;
+  margin: auto;
+  /* border:1px solid  */
+}
+.masterCardLogo,.visaCardLogo{
+  width:50px;
+  height:30px;
+ 
+}
+/* .cardNumber::placeholder{
+  text-align: right;
+} */
+.deliveryOpt{
+  color:grey;
+}
+.deliveryDetails,.cardDetails{
   display: block;
   margin:auto;
   margin-bottom:20px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid grey;
+  font-size: 20px;
+  color: rgb(21, 20, 20);
+}
+.userDiv{
+  margin-top:10px;
+}
+.userDiv input{
+  display:inline;
+  margin-right: 10px;
+}
+.contactDiv input{
+  display:inline;
+  margin-right:10px;
+}
+.contactDiv2 input{
+  display:inline;
+  margin-right: 10px;
+}
+.proceedBtn,.orderBtn{
+  margin-top:20px;
+  background-color: orange;
+  color: white;
+  border:none;
+  height: 30px;
+}
+.proceedBtn:hover{
+  cursor:pointer;
+}
+#closeDelivery{
+  float:right;
+  color: orange;
+  
+  margin-right: 10px;
+  /* margin-top:20px; */
+  font-size: 30px;
+}
+#closeDelivery:hover{
+  cursor: pointer;
+}
+/* Confirmation section */
+.confirmSection{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  position:fixed;
+  z-index: 100;
+  top: 0px;
+  left:0px;
+  background-color: white;
+ 
+  /* border: 1px solid red; */
+}
+.orderDetails{
+width:100%;
+box-shadow:1px 1px 1px 1px rgb(200, 193, 193);
+}
+.orderSummary{
+width: 100%;
+height: 300px;
+box-shadow:1px 1px 1px 1px rgb(200, 193, 193);
+}
+.confirmHead,.AddressHead,.methodHead{
+  color:grey;
+}
+/* .deliveryAddress1{
+}
+.deliveryMethod{
+
+}
+.paymentMethod{
+
+} */
+.orderSummary div{
+  /* border:1px solid red; */
+  height:50px;
+  margin-top:5px;
+}
+.summ1{
+display:inline;
+float: left;
+margin-left:5px;
+}
+.summ2{
+display:inline;
+float:right;
+margin-right:5px;
+}
+.orderBtn:hover{
+  cursor: pointer;
+}
+.confirmText{
+  /* border: 1px solid red; */
+  width:815px;
+  margin:auto;
+  /* background-color: rgb(109, 248, 109); */
+  background-color: orange;
+  color:white;
 }
 @keyframes show {
   100% {
@@ -754,7 +908,35 @@ text-align:center;
     margin:auto;
     margin-top:20px;
   }
+  .addressSummary{
+    width:99%;
+  }
+  .address{
+    width: 100%;
+    margin:auto;
+    margin-top:10px;
+  }
+  .payment_summary{
+  height:830px;
+}
+  .paymentDetails{
+    float:none;
+    display:block;
+   width:99%;
+   margin:auto;
+  }
 
+  .orderSummary{
+    float:none;
+    display:block;
+    width:99%;
+    margin:auto;
+    margin-top:10px;
+
+  }
+   .confirmText{
+  width:100%
+ }
 }
 @media screen and (width: 280px) {
   .gallery {
@@ -809,4 +991,68 @@ text-align:center;
     margin-left:20px;
     margin-bottom:20px;
   }
+
+}
+@media screen and (min-width:768px) and (max-width:792px){
+  .orderDetails{
+    display:block;
+    width:100%;
+  }
+  .orderSummary{
+    display:block;
+    width:100%;
+  }
+  .deliveryAddress1{
+    display:block;
+    float:none;
+  }
+  .paymentMethod{
+    display:block;
+    float:none;
+  }
+  .deliveryMethod{
+    display:block;
+    float:none;
+  }
+  .confirmText{
+  width:100%
+ }
+}
+@media screen and (min-width:820px){
+  .confirmSection{
+    text-align: center;
+  }
+ .orderDetails{
+    width: 500px;
+    display:inline-block;
+    height: 300px;
+    /* float:left; */
+  }
+  .orderSummary{
+   width: 300px;
+   display:inline-block;
+   /* position: absolute;
+   margin-left:10px; */
+   margin-left:10px;
+   position: relative;
+   top:-83px;
+  }
+  .deliveryAddress1{
+    display:inline;
+    margin: 5px;
+    float: left;
+    text-align: left;
+}
+.deliveryMethod{
+  display:inline;
+  margin: 5px;
+   float: left;
+   text-align: left;
+}
+.paymentMethod{
+  display:inline;
+  margin: 5px;
+   float: left;
+   text-align: left;
+}
 }

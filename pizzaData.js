@@ -22,6 +22,14 @@ export default function pizzaData(db) {
       console.log(err)
     }
   }
+  async function getUserById(userId){
+    try{
+      return await db.oneOrNone('select * from customers where id=$1',[userId])
+    }
+    catch(err){
+      console.log(err)
+    }
+  };
   async function getAllPizzas() {
     try {
       return await db.manyOrNone("select * from products limit 6");
@@ -102,6 +110,7 @@ export default function pizzaData(db) {
     checkUser,
     registerUser,
     getUser,
+    getUserById,
     getAllPizzas,
     addToCatalogue,
     myCartItems,

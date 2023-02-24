@@ -16,9 +16,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const homeLink = document.querySelector('.goHome');
   const goTochckOutBtn = document.querySelector('.goTochckOutBtn');
   const deliverySection = document.querySelector('.deliverySection');
+  const closeDelivery = document.querySelector('#closeDelivery');
+  const proceedBtn = document.querySelector('.proceedBtn');
+  const confirmSection = document.querySelector('.confirmSection');
   // const homeSection = document.querySelector('.homeSection');
   // const container = document.querySelector('.container');
   // const navigation = document.querySelector('.topBar'); 
+  const deliveryMethod = document.querySelectorAll('.delivery');
+  // const deliveryDetails = document.querySelectorAll('.deliveryDetails');
+  const formContent = document.querySelector('.deliveryFormContent');
+  const cardNumber = document.querySelector('.cardNumber')
+  const masterCardLogo = document.querySelector('.masterCardLogo');
+  const visaCardLogo = document.querySelector('.visaCardLogo');
+  const cartCount = document.querySelector('.cartCount')
  
   
  //console.log(container.scrollTop)
@@ -89,6 +99,12 @@ document.addEventListener("DOMContentLoaded", function () {
     main.classList.add('show');
   })
   cartBtn.addEventListener('click',function(){
+    if(Number(cartCount.innerHTML) === 0){
+      goTochckOutBtn.setAttribute('style','cursor:not-allowed');
+    }
+    else{
+      goTochckOutBtn.setAttribute('style','cursor:pointer')
+    }
     main.classList.remove('show');
     main.classList.add('hide');
     catalogueSection.classList.remove('hide');
@@ -96,11 +112,69 @@ document.addEventListener("DOMContentLoaded", function () {
     registrationState.classList.add('hide');
   })
   goTochckOutBtn.addEventListener('click',function(){
-    catalogueSection.classList.remove('show');
-    catalogueSection.classList.add('hide');
-    deliverySection.classList.remove('hide');
-    deliverySection.classList.add('show');
+    if(Number(cartCount.innerHTML) === 0){
+      return;
+    }
+    axios.get("/api/checkOut").then(results=>{
+      let response = results.data;
+      let data = response.status;
+      if(data === "No token found" || data === "Invalid token"){
+          catalogueSection.classList.remove('show');
+          catalogueSection.classList.add('hide');
+          userPage.classList.remove("hide");
+          userPage.classList.add("show");    
+      }
+      else{
+        catalogueSection.classList.remove('show');
+        catalogueSection.classList.add('hide');
+        deliverySection.classList.remove('hide');
+        deliverySection.classList.add('show');
+      }
+    })
   })
+  closeDelivery.addEventListener('click',function(){
+    deliverySection.classList.remove('show');
+    deliverySection.classList.add('hide');
+    catalogueSection.classList.remove('hide');
+    catalogueSection.classList.add('show');
+  })
+  proceedBtn.addEventListener('click',function(){
+    deliverySection.classList.remove('show');
+    deliverySection.classList.add('hide');
+    confirmSection.classList.remove('hide');
+    confirmSection.classList.add('show');
+  })
+  deliveryMethod.forEach(method=>{
+    method.addEventListener('click',function(){
+      if(method.value === "pickup"){
+        formContent.classList.remove('show')
+        formContent.classList.add('hide');
+      }else{
+        formContent.classList.remove('hide')
+        formContent.classList.add('show')
+      }
+    })
+  })
+  cardNumber.oninput = function(){
+   if(cardNumber.value.length === 4 && cardNumber.value.startsWith(5)){
+      visaCardLogo.classList.remove('show')
+      visaCardLogo.classList.add('hide')
+      masterCardLogo.classList.remove('hide');
+      masterCardLogo.classList.add('show');
+   }
+   else if(cardNumber.value.length === 4 && cardNumber.value.startsWith(4)){
+     masterCardLogo.classList.add('hide');
+     masterCardLogo.classList.remove('show')
+     visaCardLogo.classList.remove('hide')
+     visaCardLogo.classList.add('show')
+   }
+  else if(cardNumber.value.length === 0){
+     masterCardLogo.classList.remove('show');
+     masterCardLogo.classList.add('hide');
+     visaCardLogo.classList.add('hide');
+     visaCardLogo.classList.remove('show')
+   }
+  }
   //server side
   const registerBtn = document.querySelector('.registerBtn');
   const loginBtn = document.querySelector('.loginBtn');
@@ -114,6 +188,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const errMsgs = document.querySelectorAll('.errMsg')
   const loginError = document.querySelector('.loginError');
   const registerError = document.querySelector('.registerError');
+
+
 
   
   function hideErrMsg(){
@@ -175,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
       axios.post('/api/user/login',{email,password}).then(results =>{
          let response = results.data;
          let data = response.status;
-         
+         console.log(data)
       })
 
     })
@@ -218,6 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
           let response = results.data;
           let data = response.data;
           let totAmnt = 0
+            cartCount.innerHTML = data.length;
            data.forEach(item=>{
             let itemPrice = Number(item.price)
             subTotals.innerHTML += `<div class='itemSubTotal'><p class='item' id=${item.product}>${item.product} X${item.qty}</p>
@@ -357,11 +434,34 @@ function remove(){
       })
     }
   }
+  let detailsList = {};
+  function deliveryDetails(){
+   proceedBtn.addEventListener('click',function(){
+     const deliveryName = document.querySelector('.deliveryName').value;
+     const deliveryLastName = document.querySelector('.deliveryLastName').value;
+  const deliveryContacts = document.querySelector('.deliveryContacts').value;
+  const deliveryAddress = document.querySelector('.deliveryAddress').value;
+  const deliveryTown = document.querySelector('.deliveryUnit').value;
+  const deliveryZip = document.querySelector('.deliveryZip').value;
+   detailsList = {
+    recipientName:deliveryName,
+    recipientLstName: deliveryLastName,
+    contacts: deliveryContacts,
+    address: deliveryAddress,
+    town: deliveryTown,
+    zipCode: deliveryZip
+  };
+  // detailsList.push(deliveryName,deliveryLastName,deliveryContacts,deliveryAddress,deliveryUnit,deliveryZip);
+  return detailsList;
+   }) 
+  }
+  //
   displayPizzas();
    myMenuDetails();
   myCart();
   register();
   login();
+  deliveryDetails();
  });
     
 

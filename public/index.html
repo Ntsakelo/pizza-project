@@ -19,7 +19,9 @@
       <div class="name">
         <h2>Mama's Pizza</h2>
         <!-- <p class="cartCount">1</p> -->
-        <i class="fa-solid fa-cart-shopping shoppingCart"></i>
+        <i class="fa-solid fa-cart-shopping shoppingCart">
+          <div class="cartCount">0</div>
+        </i>
       </div>
       <div class="navigation-small">
         <i class="fa-solid fa-bars navBtn"></i>
@@ -101,7 +103,8 @@
     <div class="catalogueSection hide">
       <div class="top">
         <h3 class="catHead">My Menu</h3>
-        <a href="#" class="goHome">Go home</a>
+        <!-- <a href="#" class="goHome">Go home</a> -->
+        <i class="fa-solid fa-x goHome"></i>
 
       </div>
       <div class="catalogueList">
@@ -129,26 +132,87 @@
       </div>
     </div>
     <div class="deliverySection hide">
-      <h3 class="deliveryHead">Delivery Details</h3>
+      <h3 class="deliveryHead">Payment and Delivery Details <i class="fa-solid fa-x" id="closeDelivery"></i></h3>
+      <!-- <i class="fa-solid fa-x" id="closeDelivery"></i> -->
       <form action="" class="deliveryForm">
-        <h4 class="deliveryOpt">Choose Option</h4>
-        <div>
-          <p>We only deliver around Cape Town. Deliveries are charged at R50.00</p>
-          <input type="radio" class="delivery" name="deliveryType">
+        <div class="formContent">
+          <h4 class="deliveryOpt">Choose your prefered method</h4>
+          <input type="radio" class="delivery" name="deliveryType" value="deliver" checked>
           <label for="delivery">Delivery</label>
-          <input type="text" class="deliveryName deliveryDetails" placeholder="First name">
-          <input type="text" class="deliveryLastName deliveryDetails" placeholder="Last name">
-          <input type="text" class="deliveryContacts deliveryDetails" placeholder="Contact number">
-          <input type="text" class="deliveryLocation deliveryDetails" placeholder="Location">
-        </div>
-        <div>
-          <input type="radio" class="delivery" name="deliveryType">
-          <label for="delivery">Collection</label>
-          <!-- <select name="" id="storeLocation">
-            <option value="">Select location</option>
-          </select> -->
+          <input type="radio" class="delivery" value="pickup" name="deliveryType">
+          <label for="delivery">Pickup</label>
+          <div class="deliveryFormContent show">
+            <p>We only deliver around Cape Town. Deliveries are charged at R50.00</p>
+            <div class="userDiv">
+              <input type="text" class="deliveryName deliveryDetails" placeholder="First name">
+              <input type="text" class="deliveryLastName deliveryDetails" placeholder="Last name">
+            </div>
+            <div class="contactDiv">
+              <input type="number" class="deliveryContacts deliveryDetails" placeholder="Contact number">
+              <input type="text" class="deliveryAddress deliveryDetails" placeholder="Street address">
+            </div>
+            <div class="contactDiv2">
+              <input type="text" class="deliveryUnit deliveryDetails" placeholder="Town name">
+              <input type="text" class="deliveryZip deliveryDetails" placeholder="Zip code">
+            </div>
+          </div>
+          <div>
+            <h3 class="paymentHead">Payment Details</h3>
+            <div class="creditType">
+              <img src="./images/MasterCard_Logo.svg.png" class="masterCardLogo hide" alt="mastercard">
+              <img src="./images/visa-logo-800x450.jpg" class="visaCardLogo hide" alt="visa">
+            </div>
+            <div class="userDiv">
+              <input type="number" class="cardNumber cardDetails" placeholder="Card number">
+              <input type="text" class="cardExpiry cardDetails" placeholder="Expiry date">
+            </div>
+            <div class="contactDiv">
+              <input type="cvv" class="ccvNumber cardDetails" placeholder="CVV">
+              <input type="text" class="cardHolder cardDetails" placeholder="Card holder name">
+            </div>
+            <button type="button" class="proceedBtn">PROCEED</button>
+          </div>
         </div>
       </form>
+    </div>
+    <div class="confirmSection hide">
+      <h3 class="confirmHead">Confirm Your Order</h3>
+      <div class="confirmText">
+        <p>Almost done! Please click "PLACE ORDER" to complete your purchase</p>
+      </div>
+      <div class="orderDetails">
+        <div class="deliveryAddress1">
+          <h4 class="AddressHead">Delivery Address</h4>
+          <p class="streetAddress">64 Tarentaal Street</p>
+          <p class="town">Makhado Park</p>
+          <p class="Zip">0920</p>
+        </div>
+        <div class="deliveryMethod">
+          <h4 class="methodHead">Delivery Method</h4>
+          <p>Pickup</p>
+        </div>
+        <div class="paymentMethod">
+          <h4 class="methodHead">Payment Method</h4>
+          <p class="paymentType"><img src="./images/visa-logo-800x450.jpg" class="visaCardLogo" alt="visa"></p>
+          <p class="cardInfo">XXXXXXXXXXXX1234</p>
+        </div>
+      </div>
+      <div class="orderSummary">
+        <div>
+          <p class="itemTotalLabel summ1">Item(s) total</p>
+          <p class="ItemTotal summ2">R124.00</p>
+        </div>
+        <div>
+          <p class="deliveryAmntLabel summ1">Delivery</p>
+          <p class="deliveryAmnt summ2">R50.00</p>
+        </div>
+        <hr />
+        <div>
+          <p class="orderTotalLabel summ1">Order Total</p>
+          <p class="orderTotal summ2">R174.00</p>
+        </div>
+        <button type="button" class="orderBtn">PLACE ORDER</button>
+      </div>
     </div>
   </div>
   <div class="main">
@@ -276,7 +340,7 @@
 
   <script src="./index.js"></script>
   <script src="./server.js"></script>
-  <script type="text/javascript" src="js/materialize.min.js"></script>
+
 </body>
 
 </html>

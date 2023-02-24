@@ -128,6 +128,32 @@ export default function (pizzaData) {
       next(err)
     }
   }
+ async function checkAuth(req, res, next) {
+  try{
+    const token = req.cookies.access_token;
+    if (!token) {
+      return res.json({
+        status: "No token found",
+      });
+    }
+    Jwt.verify(token, `${process.env.SECRET_KEY}`,async function (err, userId) {
+      if (err) {
+        return res.json({
+          status: "Invalid token",
+        });
+      }
+     let results = await pizzaData.getUserById(userId.id);
+    return res.json({
+      data: results,
+      status:`Welcome back ${results.firstname}`
+    })
+    });
+
+  }catch(err){
+    next(err);
+
+  }
+}
   return {
     register,
     login,
@@ -135,6 +161,7 @@ export default function (pizzaData) {
     addPizza,
     showMyCartItems,
     updateQty,
-    removeItem
+    removeItem,
+    checkAuth
   };
 }

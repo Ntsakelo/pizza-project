@@ -40,3 +40,15 @@ create table orders(
     order_status text not null,
     foreign key(customer_id) references customers(id) on delete cascade
 );
+
+create table deliveries(
+    id serial primary key not null,
+    order_id int not null,
+    recipient_firstname text not null,
+    recipient_lastname text not null,
+    contact int not null,
+    street_address text not null,
+    town_name text not null,
+    zip_code int not null
+    foreign key(order_id) references orders(id) on delete cascade
+) 

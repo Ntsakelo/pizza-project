@@ -9,7 +9,6 @@ import flash from "express-flash";
 import * as dotenv from "dotenv";
 dotenv.config();
 import cookieParser from "cookie-parser";
-
 const pgp = pgPromise();
 
 const DATABASE_URL =
@@ -60,6 +59,7 @@ app.post('/api/addToCatalogue',pizzaApi.addPizza);
 app.get('/api/myCart',pizzaApi.showMyCartItems);
 app.post('/api/myCart/update/qty',pizzaApi.updateQty)
 app.get(`/api/myCart/update/product/delete/:id`,pizzaApi.removeItem)
+app.get("/api/checkOut",pizzaApi.checkAuth)
 
 const port = process.env.PORT || 5012;
 app.listen(port, function () {
