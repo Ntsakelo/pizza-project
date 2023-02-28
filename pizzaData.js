@@ -37,6 +37,20 @@ export default function pizzaData(db) {
       console.log(err);
     }
   }
+  async function showAllMenu(){
+    try{
+     return await db.manyOrNone('select * from products')
+    }catch(err){
+      console.log(err)
+    }
+  }
+  async function getPizza(pizzaName){
+    try{
+      return await db.oneOrNone('select * from products where product=$1',[pizzaName]);
+    }catch(err){
+      console.log(err)
+    }
+  }
   async function addToCatalogue(productId, sessionId,selectedPrice, qty) {
     try {
       let priceList = await db.oneOrNone(
@@ -105,6 +119,33 @@ export default function pizzaData(db) {
       console.log(err)
     }
   }
+  async function cartTotal(sessionId){
+    try{
+      let results = await db.manyOrNone('select * from catalogue where session_id = $1',[sessionId]);
+      let total = 0;
+      results.forEach(item=>{
+        total += Number(item.price);
+      })
+      return total;
+    }catch(err){
+      console.log(err)
+    }
+  }
+  async function order(sessionId,firstName,lastName,email){
+    try{
+      let results = await db.manyOrNone('select * from catalogue join products on catalogue.product_id = products.id where session_id = $1',[sessionId]);
+      console.log(results);
+      let customer = await db.oneOrNone('select id from customers where firstname = $1 and lastname = $2 and email = $3',[firstName,lastName,email]);
+      // let currentdate = new Date();
+      results.forEach(async item=>{
+        await db.none('insert into orders(customer_id,product,qty,price,order_status) values($1,$2,$3,$4,$5)',[customer.id,item.product,item.qty,item.price,'processing']);
+      })
+      await db.none('delete from catalogue where session_id = $1',[sessionId]);
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
   //return
   return {
     checkUser,
@@ -112,10 +153,14 @@ export default function pizzaData(db) {
     getUser,
     getUserById,
     getAllPizzas,
+    showAllMenu,
+    getPizza,
     addToCatalogue,
     myCartItems,
     updateItemQty,
     removeFromCart,
+    cartTotal,
+    order,
   };
 }
       

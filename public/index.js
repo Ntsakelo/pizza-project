@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const showLogin = document.querySelectorAll(".goToLogin");
   const navLinks = document.querySelectorAll(".navLink");
   const userBtn = document.querySelectorAll(".profile");
+  const itemViewing = document.querySelector('.ItemViewing');
   const catalogueSection = document.querySelector('.catalogueSection');
   const main = document.querySelector('.main');
   const cartBtn = document.querySelector('.shoppingCart');
@@ -28,15 +29,23 @@ document.addEventListener("DOMContentLoaded", function () {
   const cardNumber = document.querySelector('.cardNumber')
   const masterCardLogo = document.querySelector('.masterCardLogo');
   const visaCardLogo = document.querySelector('.visaCardLogo');
-  const cartCount = document.querySelector('.cartCount')
- 
-  
+  const cartCount = document.querySelector('.cartCount');
+
  //console.log(container.scrollTop)
+//  Referral object
+// let pageReferral = {
+//   currentPage: "https://mama's pizza.com/home",
+//   previousPage: "",
+// };
   navBtn.addEventListener("click", function () {
-    if (userPage.classList.contains("show")) {
+    if (userPage.classList.contains("show") || itemViewing.classList.contains('show')) {
       userPage.classList.remove("show");
       userPage.classList.add("hide");
+      itemViewing.classList.remove('show');
+      itemViewing.classList.add('hide');
     }
+    fullMenu.classList.remove('show');
+    fullMenu.classList.add('hide');
     smallScreenMenu.classList.remove("hideMenu");
     smallScreenMenu.classList.add("showMenu");
     navBtn.setAttribute("style", "display:none");
@@ -52,6 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
     smallScreenMenu.classList.add("hideMenu");
     navBtn.setAttribute("style", "display:block");
     closeBtn.setAttribute("style", "display:none");
+    main.classList.remove('hide');
+    main.classList.add('show');
+    fullMenu.classList.remove('show');
+    fullMenu.classList.add('hide');
   });
   showRegister.addEventListener("click", function () {
     loginSection.classList.remove("show");
@@ -74,15 +87,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
   navLinks.forEach((link) => {
     link.addEventListener("click", function () {
-      if (userPage.classList.contains("show")) {
+      if (userPage.classList.contains("show") || itemViewing.classList.contains('show')) {
         userPage.classList.remove("show");
         userPage.classList.add("hide");
+        itemViewing.classList.remove('show');
+        itemViewing.classList.add('hide');
+        main.classList.remove('hide');
+        main.classList.add('show');
       }
+      fullMenu.classList.remove('show');
+      fullMenu.classList.add('hide');
+      main.classList.remove('hide');
+      main.classList.add('show');
     });
   });
   userBtn.forEach((btn) => {
     btn.addEventListener("click", function () {
-      if (smallScreenMenu.classList.contains("showMenu")) {
+      if (smallScreenMenu.classList.contains("showMenu") || itemViewing.classList.contains('show')) {
+        itemViewing.classList.remove('show');
+        itemViewing.classList.add('hide');
         smallScreenMenu.classList.remove("showMenu");
         smallScreenMenu.classList.add("hideMenu");
         navBtn.setAttribute("style", "display:block");
@@ -90,13 +113,21 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       userPage.classList.remove("hide");
       userPage.classList.add("show");
+      fullMenu.classList.remove('show');
+      fullMenu.classList.add('hide');
     });
   });
   homeLink.addEventListener('click',function(){
+    if(userPage.classList.contains('show')){
+      userPage.classList.remove('show');
+      userPage.classList.add('hide');
+    }
     catalogueSection.classList.remove('show');
     catalogueSection.classList.add('hide');
     main.classList.remove('hide');
     main.classList.add('show');
+    fullMenu.classList.remove('show');
+    fullMenu.classList.add('hide');
   })
   cartBtn.addEventListener('click',function(){
     if(Number(cartCount.innerHTML) === 0){
@@ -110,6 +141,10 @@ document.addEventListener("DOMContentLoaded", function () {
     catalogueSection.classList.remove('hide');
     catalogueSection.classList.add('show');
     registrationState.classList.add('hide');
+    itemViewing.classList.remove('show');
+    itemViewing.classList.add('hide');
+    fullMenu.classList.remove('show');
+    fullMenu.classList.add('hide');
   })
   goTochckOutBtn.addEventListener('click',function(){
     if(Number(cartCount.innerHTML) === 0){
@@ -180,6 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginBtn = document.querySelector('.loginBtn');
   const menuTemplate = document.querySelector(".menuTemplate");
   const pizzaList = document.querySelector(".pizzaList");
+  const fullMenuTemplate = document.querySelector('.fullMenuTemplate');
+  const fullMenu = document.querySelector('.fullMenu');
   const catalogueTemplate = document.querySelector('.catalogueTemplate')
   const catalogueList = document.querySelector('.catalogueList');
   const itemSubTotal = document.querySelector('.itemSubTotal');
@@ -188,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const errMsgs = document.querySelectorAll('.errMsg')
   const loginError = document.querySelector('.loginError');
   const registerError = document.querySelector('.registerError');
-
+   
 
 
   
@@ -245,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if(!email || !password){
          loginError.setAttribute('style','display:block');
          loginError.innerHTML = "Please enter all details";
-         setTimeout(hideErrMsg,3000);
+         setTimeout(hideErrMsg,10000);
          return
       }
       axios.post('/api/user/login',{email,password}).then(results =>{
@@ -270,15 +307,74 @@ document.addEventListener("DOMContentLoaded", function () {
           price.classList.add("currentPrice");
         }
       });
-      myMenuDetails();
+      // myMenuDetails();
+       viewPizza();
+       viewFullMenu();
     });
   }
+  function viewFullMenu(){
+    const viewFullMenuBtn = document.querySelector('.viewFullMenuBtn');
+    viewFullMenuBtn.addEventListener('click',function(){
+      axios.get('/api/menu/fullMenu').then(results=>{
+      let response = results.data;
+      let data = response.data;
+      let template = Handlebars.compile(fullMenuTemplate.innerHTML);
+      fullMenu.innerHTML = template({
+        item: data,
+      });
+      viewPizza();
+      main.classList.remove('show');
+      main.classList.add('hide');
+      fullMenu.classList.remove('hide');
+      fullMenu.classList.add('show');
+      })
+    })
+  }
   let itemTot;
+  function viewPizza(){
+   const allPizzas = document.querySelectorAll('.pizza');
+   const pizzaTemplate = document.querySelector('.pizzaTemplate');
+   allPizzas.forEach(pizza=>{
+     pizza.addEventListener('click',function(){
+      //  alert(pizza.id)
+      axios.get(`/api/menu/${pizza.id}`).then(results=>{
+        let response = results.data;
+        let data = response.data;
+        let pizzaList = [];
+        pizzaList.push(data);
+        let template = Handlebars.compile(pizzaTemplate.innerHTML);
+        itemViewing.innerHTML = template({
+          pizza: pizzaList
+        })
+        myMenuDetails();
+         closePizzaViewing();
+        if(fullMenu.classList.contains('show')){
+          fullMenu.classList.remove('show');
+          fullMenu.classList.add('hide');
+        }
+        main.classList.remove('show');
+        main.classList.add('hide');
+        itemViewing.classList.remove('hide');
+        itemViewing.classList.add('show');
+      })
+     })
+     
+   })
+  }
+  function closePizzaViewing(){
+     const backToMenu = document.querySelector('.backToMenu');
+     backToMenu.addEventListener('click',function(){
+      itemViewing.classList.remove('show');
+      itemViewing.classList.add('hide');
+      main.classList.remove('hide');
+      main.classList.add('show');
+     })
+  }
   function myMenuDetails() {
     let selectedPrice = "";
     let productId = "";
     let qty = 1;
-    const addButtons = document.querySelectorAll(".addToBasketBtn");
+    const addButton = document.querySelector(".addToBasketBtn");
     const pizzaPrices = document.querySelectorAll(".price");
     pizzaPrices.forEach((price) => {
       price.addEventListener("click", function () {
@@ -286,9 +382,9 @@ document.addEventListener("DOMContentLoaded", function () {
    
       });
     });
-    addButtons.forEach((btn) => {
-      btn.addEventListener("click", function () {
-        productId = btn.id;
+    // addButtons.forEach((btn) => {
+      addButton.addEventListener("click", function () {
+        productId = addButton.id;
         subTotals.innerHTML = "";
         axios.post('/api/addToCatalogue',{productId,selectedPrice,qty}).then(results=>{
           let response = results.data;
@@ -306,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function () {
           itemTot = subTotal;
         })
       });
-    });
+    // });
   }
   function myCart(){
     cartBtn.addEventListener('click',function(){
@@ -414,7 +510,7 @@ function remove(){
       let totAmnt = 0
            subTotals.innerHTML = "";
            if(data.length <= 0){
-            total.innerHTML = "R0.OO"
+            total.innerHTML = "R0.00"
            }
            data.forEach(item=>{
             subTotals.innerHTML += `<div class='itemSubTotal'><p class='item' id=${item.product}>${item.product} X${item.qty}</p>
@@ -434,30 +530,108 @@ function remove(){
       })
     }
   }
-  let detailsList = {};
+  let details = {};
   function deliveryDetails(){
    proceedBtn.addEventListener('click',function(){
-     const deliveryName = document.querySelector('.deliveryName').value;
-     const deliveryLastName = document.querySelector('.deliveryLastName').value;
-  const deliveryContacts = document.querySelector('.deliveryContacts').value;
-  const deliveryAddress = document.querySelector('.deliveryAddress').value;
-  const deliveryTown = document.querySelector('.deliveryUnit').value;
-  const deliveryZip = document.querySelector('.deliveryZip').value;
-   detailsList = {
-    recipientName:deliveryName,
-    recipientLstName: deliveryLastName,
-    contacts: deliveryContacts,
-    address: deliveryAddress,
-    town: deliveryTown,
-    zipCode: deliveryZip
-  };
-  // detailsList.push(deliveryName,deliveryLastName,deliveryContacts,deliveryAddress,deliveryUnit,deliveryZip);
-  return detailsList;
-   }) 
-  }
-  //
+    axios.get('/api/total').then(results=>{
+      let response = results.data;
+      let data = response.data;
+      console.log(data);
+      const confirmTemplate = document.querySelector('.confirmTemplate');
+      const confirmSection = document.querySelector('.confirmSection')
+      const deliverOption = document.querySelector('.deliver');
+      const pickUpOption = document.querySelector('.pickup');
+      const deliveryName = document.querySelector('.deliveryName').value;
+      const deliveryLastName = document.querySelector('.deliveryLastName').value;
+      const deliveryContacts = document.querySelector('.deliveryContacts').value;
+      const deliveryAddress = document.querySelector('.deliveryAddress').value;
+      const deliveryTown = document.querySelector('.deliveryUnit').value;
+      const deliveryZip = document.querySelector('.deliveryZip').value;
+      const cardNumber2 = document.querySelector('.cardNumber').value;
+      const cardExpiry = document.querySelector('.cardExpiry').value;
+      const cvvNumber = document.querySelector('.ccvNumber').value;
+      const cardHolder = document.querySelector('.cardHolder').value;
+      let detailsList = [];
+      let paymentNtwrkImage = "";
+ 
+     if(deliverOption.checked){
+       if(cardNumber2.startsWith(5)){
+          paymentNtwrkImage = "./images/MasterCard_Logo.svg.png";
+       }
+       else if(cardNumber2.startsWith(4)){
+         paymentNtwrkImage = "./images/visa-logo-800x450.jpg"; 
+       }
+       let deliveryAmnt = 50;
+       details = {
+        recipientName:deliveryName,
+        recipientLstName: deliveryLastName,
+        contacts: deliveryContacts,
+        address: deliveryAddress,
+        town: deliveryTown,
+        zipCode: deliveryZip,
+        cardNumber: cardNumber2,
+        cardExpiry: cardExpiry,
+        cvv: cvvNumber,
+        cardOwner: cardHolder, 
+        ntwrkImage: paymentNtwrkImage,
+        method:'delivery',
+        deliverAmount:"R" + deliveryAmnt.toFixed(2),
+        itemsAmount: "R" + data.toFixed(2),
+        totalAmount: "R" + ((data + 50.00).toFixed(2))
+      };
+      detailsList.push(details);
+   } 
+     else if(pickUpOption.checked){
+       if(cardNumber2.startsWith(5)){
+          paymentNtwrkImage = "./images/MasterCard_Logo.svg.png";
+       }
+       else if(cardNumber2.startsWith(4)){
+         paymentNtwrkImage = "./images/visa-logo-800x450.jpg"; 
+       }
+      details = {
+        recipientName:'N/A',
+        recipientLstName: 'N/A',
+        contacts: 'N/A',
+        address: 'Not Applicable',
+        town: '',
+        zipCode: '',
+        cardNumber: cardNumber2,
+        cardExpiry: cardExpiry,
+        cvv: cvvNumber,
+        cardOwner: cardHolder, 
+        ntwrkImage: paymentNtwrkImage,
+        method:"pickup",
+        deliverAmount: 'N/A',
+        itemsAmount: "R" + data.toFixed(2),
+        totalAmount: "R" + data.toFixed(2),
+      };
+      detailsList.push(details);
+     }
+     const template = Handlebars.compile(confirmTemplate.innerHTML);
+     confirmSection.innerHTML = template({
+       details:detailsList,
+     })
+     completedOrder();
+    }) 
+  })
+}
+function completedOrder(){
+  const orderBtn = document.querySelector('.orderBtn');
+  const completedSection = document.querySelector('.completedSection')
+  orderBtn.addEventListener('click',function(){
+    axios.get('/api/placeOrder').then(results=>{
+      confirmSection.classList.remove('show');
+      confirmSection.classList.add('hide');
+      completedSection.classList.remove('hide');
+      completedSection.classList.add('show');
+
+    })
+  })
+}
+//
   displayPizzas();
-   myMenuDetails();
+  //  myMenuDetails();
+  
   myCart();
   register();
   login();

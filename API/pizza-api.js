@@ -72,6 +72,27 @@ export default function (pizzaData) {
       next(err);
     }
   }
+  async function fullMenu(req,res,next){
+    try{
+      let results = await pizzaData.showAllMenu();
+      res.json({
+        data: results
+      })
+    }catch(err){
+      next(err)
+    }
+  }
+  async function pizza(req,res,next){
+    try{
+       let pizzaName = req.params.product;
+       let results = await pizzaData.getPizza(pizzaName);
+       res.json({
+        data: results
+       })
+    }catch(err){
+      next(err)
+    }
+  }
   async function addPizza(req,res,next){
     try{
         let productId = req.body.productId;
@@ -128,6 +149,46 @@ export default function (pizzaData) {
       next(err)
     }
   }
+  async function total(req,res,next){
+    try{
+      let sessionId = req.session.user;
+      let results = await pizzaData.cartTotal(sessionId);
+      res.json({
+        data: results
+      })
+    }
+    catch(err){
+      next(err)
+    }
+  }
+  async function placeOrder(req,res,next){
+    try{
+     let sessionId = req.session.user;
+     const token = req.cookies.access_token;
+     if (!token) {
+      return res.json({
+        status: "No token found",
+      });
+    }
+    Jwt.verify(token, `${process.env.SECRET_KEY}`,async function (err, userId) {
+      if (err) {
+        return res.json({
+          status: "Invalid token",
+        });
+      }
+     let results = await pizzaData.getUserById(userId.id);
+     let firstName = results.firstname;
+     let lastName = results.lastname;
+     let email = results.email;
+     await pizzaData.order(sessionId,firstName,lastName,email);
+     res.json({
+      status:"success"
+     })
+    })
+    }catch(err){
+      next(err)
+    }
+  }
  async function checkAuth(req, res, next) {
   try{
     const token = req.cookies.access_token;
@@ -158,10 +219,14 @@ export default function (pizzaData) {
     register,
     login,
     allPizzas,
+    fullMenu,
+    pizza,
     addPizza,
     showMyCartItems,
     updateQty,
     removeItem,
+    total,
+    placeOrder,
     checkAuth
   };
 }

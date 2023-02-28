@@ -177,37 +177,7 @@ html {
   animation-iteration-count: infinite;
   animation-direction: normal;
 }
-/* PromoSection */
-.promoSection{
-  width:100%;
-  height: 100%;
-  /* border: 1px solid red; */
-  text-align: center;
-}
-.promotion{
-  width: 300px;
-  height: 300px;
-  border: 1px solid blue;
-  display:inline-block;
-  margin-top:25px;
-  margin-left: 10px;
-}
-.promoName{
-  /* border: 1px solid red; */
-  height: 20px;
-  width: 50%;
-  transform: rotateZ(45deg);
-  margin-top: 235px;
-  margin-left: -25px;
-  background-color:rgb(24, 24, 24);
-  color:rgb(255, 187, 61);
- 
-}
-.promoName p{
-  font-size: 16px;
-  margin-top: 2px;
-}
-/* Promo end */
+
 .pizzaAbtImg {
   display: block;
   width: 400px;
@@ -224,6 +194,10 @@ html {
   color: white;
   background-color: orange;
   border: none;
+}
+.viewFullMenuBtn{
+  display:block;
+  margin:auto;
 }
 .Btn:hover {
   cursor: pointer;
@@ -294,8 +268,8 @@ html {
   margin-bottom: 20px;
 }
 .pizzaImg {
-  width: 250px;
-  height: 250px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
   display: block;
   margin: auto;
@@ -320,20 +294,18 @@ html {
 }
 .price:hover {
   cursor: pointer;
-  /* background-color: orange;
-  color: white; */
-  background-color:rgb(24, 24, 24);
+  /* background-color:rgb(24, 24, 24); */
   color:rgb(255, 187, 61);
+  outline-color: rgb(255,187,61);
 }
 .currentPrice {
-  /* background-color: orange;
-  color: white; */
-    background-color:rgb(24, 24, 24);
+  background-color:rgb(24, 24, 24);
   color:rgb(255, 187, 61);
 }
 .ingredients {
   color: grey;
 }
+
 /* Gallery */
 .gallerySection {
   height: 100vh;
@@ -344,7 +316,6 @@ html {
 .gallery {
   width: 300px;
   height: 250px;
-  /* background-color: rgb(245, 242, 242); */
   display: inline-block;
   margin-right: 40px;
 }
@@ -357,9 +328,10 @@ html {
   box-shadow: 5px 5px 5px 5px rgb(199, 198, 198);
 }
 
-.addToBasketBtn {
-  display: block;
+.addToBasketBtn,.backToMenu {
+  display: inline-block;
   margin: auto;
+  margin-left:10px;
   height: 30px;
   /* background-color: orange;
   color: white; */
@@ -367,16 +339,29 @@ html {
   color:rgb(255, 187, 61);
   border: none;
 }
-.addToBasketBtn:hover {
+.addToBasketBtn:hover,.backToMenu:hover {
   cursor: pointer;
 }
-.user {
+.user,.ItemViewing{
   height: 100vh;
   width: 100%;
   border-top: 1px solid grey;
   position: fixed;
   background-color: white;
   
+}
+.fullMenu{
+   height: 100%;
+  width: 100%;
+  border-top: 1px solid grey;
+  position: fixed;
+  background-color: white;
+  overflow: auto;
+  text-align: center;
+}
+#menuHead{
+  margin-top:100px;
+  margin-bottom: 0px;
 }
 .userHead,
 .userText{
@@ -462,6 +447,52 @@ text-align:center;
 .successTxt{
   color:green;
 }
+/* current viewing */
+.itemPicture{
+ width: 50%;
+ height: 600px;
+ /* border: 1px solid red; */
+ float: left;
+ box-sizing: border-box;
+ margin-top:20px;
+ box-shadow: 1px 1px 1px 1px rgb(203, 203, 203);
+}
+.itemViewingDetails{
+width: 50%;
+height:600px;
+/* border:1px solid red; */
+float:right;
+box-sizing: border-box;
+margin-top:20px;
+box-shadow: 1px 1px 1px 1px rgb(203, 203, 203);
+/* text-align: center; */
+}
+.viewedPicture{
+  height:100%;
+  width:100%;
+  border-radius:50%;
+}
+#pizzaName{
+  margin-top:100px;
+  text-align:left;
+  margin-bottom:40px;
+  font-size: 50px;
+}
+.price{
+  margin-bottom: 40px;
+  margin-left:10px;
+
+}
+#ingredients{
+  margin-bottom:40px;
+  margin-left:10px;
+}
+.addTobasketBtn{
+  margin-left:5px;
+  width:50px;
+  margin-left:10px;
+}
+/* end here */
 /* Catalogue section */
 .catalogueSection{
   width: 100%;
@@ -690,9 +721,6 @@ text-align:center;
   height:30px;
  
 }
-/* .cardNumber::placeholder{
-  text-align: right;
-} */
 .deliveryOpt{
   color:grey;
 }
@@ -767,14 +795,6 @@ box-shadow:1px 1px 1px 1px rgb(200, 193, 193);
 .confirmHead,.AddressHead,.methodHead{
   color:grey;
 }
-/* .deliveryAddress1{
-}
-.deliveryMethod{
-
-}
-.paymentMethod{
-
-} */
 .orderSummary div{
   /* border:1px solid red; */
   height:50px;
@@ -800,6 +820,34 @@ margin-right:5px;
   /* background-color: rgb(109, 248, 109); */
   background-color: orange;
   color:white;
+}
+/* COMPLETED SECTION */
+.completedSection{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  position:fixed;
+  z-index: 100;
+  top: 0px;
+  left:0px;
+  background-color: white;
+}
+.completedImge{
+  display:block;
+  margin-top: 100px;
+  margin:auto;
+  height: 150px;
+  width:150px;
+}
+.completedText{
+  color:grey;
+  text-align: center;
+}
+.completedText a{
+  color:orange;
+}
+.pizza:hover{
+  cursor: pointer;
 }
 @keyframes show {
   100% {
@@ -937,6 +985,37 @@ margin-right:5px;
    .confirmText{
   width:100%
  }
+ #itemViewing{
+  height: 100%;
+  overflow: auto;
+  text-align: center;
+ }
+ .itemPicture{
+  float:none;
+  display:block;
+  width:100%;
+  height: 400px;
+ }
+ .itemViewingDetails{
+  float:none;
+  display:block;
+  width:100%;
+  height:420px;
+
+ }
+ #pizzaName{
+  margin-top:0px;
+  text-align: center;
+  margin-bottom: 20px;
+ }
+ #ingredients{
+  margin-bottom:10px;
+  margin-top: 20px;
+}
+#addTobasketBtn{
+  margin-left:5px;
+  margin-top:20px;
+}
 }
 @media screen and (width: 280px) {
   .gallery {

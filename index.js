@@ -55,11 +55,15 @@ const pizzaRoutes = PizzaRoutes(pizzaData);
 app.post('/api/user/register',pizzaApi.register);
 app.post('/api/user/login',pizzaApi.login);
 app.get("/api/menu", pizzaApi.allPizzas);
+app.get('/api/menu/fullMenu',pizzaApi.fullMenu);
+app.get('/api/menu/:product',pizzaApi.pizza)
 app.post('/api/addToCatalogue',pizzaApi.addPizza);
 app.get('/api/myCart',pizzaApi.showMyCartItems);
 app.post('/api/myCart/update/qty',pizzaApi.updateQty)
 app.get(`/api/myCart/update/product/delete/:id`,pizzaApi.removeItem)
-app.get("/api/checkOut",pizzaApi.checkAuth)
+app.get("/api/checkOut",pizzaApi.checkAuth);
+app.get('/api/total',pizzaApi.total);
+app.get('/api/placeOrder',pizzaApi.placeOrder)
 
 const port = process.env.PORT || 5012;
 app.listen(port, function () {

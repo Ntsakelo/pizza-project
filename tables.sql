@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS deliveries;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS catalogue;
 DROP TABLE IF EXISTS products;
@@ -36,7 +37,9 @@ create table orders(
     customer_id int not null,
     product text not null,
     qty int not null,
-    order_date time not null,
+    price decimal not null,
+    order_date date not null DEFAULT CURRENT_DATE,
+    order_time time not null DEFAULT CURRENT_TIME,
     order_status text not null,
     foreign key(customer_id) references customers(id) on delete cascade
 );
@@ -49,6 +52,6 @@ create table deliveries(
     contact int not null,
     street_address text not null,
     town_name text not null,
-    zip_code int not null
+    zip_code int not null,
     foreign key(order_id) references orders(id) on delete cascade
 ) 

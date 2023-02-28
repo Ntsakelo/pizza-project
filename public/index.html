@@ -2,6 +2,16 @@
 <html lang="en">
 
 <head>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-5RGSCH5');</script>
+  <!-- End Google Tag Manager -->
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,8 +23,11 @@
 </head>
 
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5RGSCH5" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <div class="container">
-
     <div class="topBar">
       <div class="name">
         <h2>Mama's Pizza</h2>
@@ -79,8 +92,60 @@
           </form>
         </div>
       </div>
+      <div class="ItemViewing hide" id="itemViewing"></div>
     </div>
-    <script type="text/x-template" class="catalogueTemplate">
+  </div>
+  <div class="fullMenu hide">
+  </div>
+  <!-- </div>
+  </div> -->
+  <script type="text/x-template" class="fullMenuTemplate">
+    <h1 class="menuHead" id="menuHead">Menu</h1>
+     {{#each item}}
+          <div class="pizza" id="{{this.product}}">
+               <img
+                 class="pizzaImg"
+                 src={{this.image_url}}
+                 alt="Cheese pizza"
+               />
+               <p class="pizzaName" id={{this.id}}>{{this.product}}</p>
+               <p class="ingredients">{{this.ingredients}}</p>
+             </div>
+             {{/each}}
+  </script>
+  <script type="text/x-template" class="pizzaTemplate">
+      {{#each pizza}}
+       <div class="itemPicture">
+          <img class="viewedPicture" src="{{this.image_url}}"
+            alt="">
+        </div>
+        <div class="itemViewingDetails">
+          <p class="pizzaName" id="pizzaName">{{this.product}}</p>
+          <p class="ingredients" id="ingredients">{{this.ingredients}}</p>
+          <p class="price smallPrice" id={{this.small_price}}>
+            Small
+            <br />
+            R{{this.small_price}}
+          </p>
+          <p class="price mediumPrice" id={{this.medium_price}}>
+            Medium
+            <br />
+            R{{this.medium_price}}
+          </p>
+          <p class="price largePrice" id={{this.large_price}}>
+            Large
+            <br />
+            R{{this.large_price}}
+          </p>
+          <div>
+            <button type="button" class="addToBasketBtn"  id={{this.id}}>
+              ADD TO BASKET
+            </button>
+            <button type="button" class="backToMenu">BACK TO MENU</button>
+      {{/each}}
+
+    </script>
+  <script type="text/x-template" class="catalogueTemplate">
         {{#if cartItems}}
         {{#each cartItems}}
         <div class="catalogueItem">
@@ -100,120 +165,122 @@
          <p class="noItems">No items added yet.add items to your cart</p>
          {{/if}}
       </script>
-    <div class="catalogueSection hide">
-      <div class="top">
-        <h3 class="catHead">My Menu</h3>
-        <!-- <a href="#" class="goHome">Go home</a> -->
-        <i class="fa-solid fa-x goHome"></i>
-
-      </div>
-      <div class="catalogueList">
-      </div>
-      <div class="itemsTotals">
-        <h3 class="totalsHead">Items summary</h3>
-        <div class="subTotals">
-          <!-- <div class="itemSubTotal">
-             <p class="item">Bacon cheese</p>
-              <p class="subTotal">R100.00</p>
-            </div>
-            <div class="itemSubTotal">
-              <p class="item">Bacon cheese</p>
-               <p class="subTotal">R100.00</p>
-             </div>
-             <div class="itemSubTotal">
-              <p class="item">Bacon cheese</p>
-               <p class="subTotal">R100.00</p> -->
-        </div>
-        <div class="total">
-          <h4 class="totalh">Total</h4>
-          <h4 class="TOTAL"></h4>
-        </div>
-        <button type="button" class="goTochckOutBtn">PROCEED TO CHECKOUT</button>
-      </div>
+  <div class="catalogueSection hide">
+    <div class="top">
+      <h3 class="catHead">My Menu</h3>
+      <i class="fa-solid fa-x goHome"></i>
     </div>
-    <div class="deliverySection hide">
-      <h3 class="deliveryHead">Payment and Delivery Details <i class="fa-solid fa-x" id="closeDelivery"></i></h3>
-      <!-- <i class="fa-solid fa-x" id="closeDelivery"></i> -->
-      <form action="" class="deliveryForm">
-        <div class="formContent">
-          <h4 class="deliveryOpt">Choose your prefered method</h4>
-          <input type="radio" class="delivery" name="deliveryType" value="deliver" checked>
-          <label for="delivery">Delivery</label>
-          <input type="radio" class="delivery" value="pickup" name="deliveryType">
-          <label for="delivery">Pickup</label>
-          <div class="deliveryFormContent show">
-            <p>We only deliver around Cape Town. Deliveries are charged at R50.00</p>
-            <div class="userDiv">
-              <input type="text" class="deliveryName deliveryDetails" placeholder="First name">
-              <input type="text" class="deliveryLastName deliveryDetails" placeholder="Last name">
-            </div>
-            <div class="contactDiv">
-              <input type="number" class="deliveryContacts deliveryDetails" placeholder="Contact number">
-              <input type="text" class="deliveryAddress deliveryDetails" placeholder="Street address">
-            </div>
-            <div class="contactDiv2">
-              <input type="text" class="deliveryUnit deliveryDetails" placeholder="Town name">
-              <input type="text" class="deliveryZip deliveryDetails" placeholder="Zip code">
-            </div>
+    <div class="catalogueList">
+    </div>
+    <div class="itemsTotals">
+      <h3 class="totalsHead">Items summary</h3>
+      <div class="subTotals">
+      </div>
+      <div class="total">
+        <h4 class="totalh">Total</h4>
+        <h4 class="TOTAL"></h4>
+      </div>
+      <button type="button" class="goTochckOutBtn">PROCEED TO CHECKOUT</button>
+    </div>
+  </div>
+  <div class="deliverySection hide">
+    <h3 class="deliveryHead">Payment and Delivery Details <i class="fa-solid fa-x" id="closeDelivery"></i></h3>
+    <!-- <i class="fa-solid fa-x" id="closeDelivery"></i> -->
+    <form action="" class="deliveryForm">
+      <div class="formContent">
+        <h4 class="deliveryOpt">Choose your prefered method</h4>
+        <input type="radio" class="delivery deliver" name="deliveryType" value="deliver" checked>
+        <label for="delivery">Delivery</label>
+        <input type="radio" class="delivery pickup" value="pickup" name="deliveryType">
+        <label for="delivery">Pickup</label>
+        <div class="deliveryFormContent show">
+          <p>We only deliver around Cape Town. Deliveries are charged at R50.00</p>
+          <div class="userDiv">
+            <input type="text" class="deliveryName deliveryDetails" placeholder="First name">
+            <input type="text" class="deliveryLastName deliveryDetails" placeholder="Last name">
           </div>
-          <div>
-            <h3 class="paymentHead">Payment Details</h3>
-            <div class="creditType">
-              <img src="./images/MasterCard_Logo.svg.png" class="masterCardLogo hide" alt="mastercard">
-              <img src="./images/visa-logo-800x450.jpg" class="visaCardLogo hide" alt="visa">
-            </div>
-            <div class="userDiv">
-              <input type="number" class="cardNumber cardDetails" placeholder="Card number">
-              <input type="text" class="cardExpiry cardDetails" placeholder="Expiry date">
-            </div>
-            <div class="contactDiv">
-              <input type="cvv" class="ccvNumber cardDetails" placeholder="CVV">
-              <input type="text" class="cardHolder cardDetails" placeholder="Card holder name">
-            </div>
-            <button type="button" class="proceedBtn">PROCEED</button>
+          <div class="contactDiv">
+            <input type="number" class="deliveryContacts deliveryDetails" placeholder="Contact number">
+            <input type="text" class="deliveryAddress deliveryDetails" placeholder="Street address">
+          </div>
+          <div class="contactDiv2">
+            <input type="text" class="deliveryUnit deliveryDetails" placeholder="Town name">
+            <input type="text" class="deliveryZip deliveryDetails" placeholder="Zip code">
           </div>
         </div>
-      </form>
-    </div>
-    <div class="confirmSection hide">
+        <div>
+          <h3 class="paymentHead">Payment Details</h3>
+          <div class="creditType">
+            <img src="./images/MasterCard_Logo.svg.png" class="masterCardLogo hide" alt="mastercard">
+            <img src="./images/visa-logo-800x450.jpg" class="visaCardLogo hide" alt="visa">
+          </div>
+          <div class="userDiv">
+            <input type="number" class="cardNumber cardDetails" placeholder="Card number">
+            <input type="text" class="cardExpiry cardDetails" placeholder="Expiry date">
+          </div>
+          <div class="contactDiv">
+            <input type="cvv" class="ccvNumber cardDetails" placeholder="CVV Code">
+            <input type="text" class="cardHolder cardDetails" placeholder="Name on Card">
+          </div>
+          <button type="button" class="proceedBtn">PROCEED</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script type="text/x-template" class="confirmTemplate">
       <h3 class="confirmHead">Confirm Your Order</h3>
       <div class="confirmText">
         <p>Almost done! Please click "PLACE ORDER" to complete your purchase</p>
       </div>
-      <div class="orderDetails">
+      {{#each details}}
+           <div class="orderDetails">
         <div class="deliveryAddress1">
           <h4 class="AddressHead">Delivery Address</h4>
-          <p class="streetAddress">64 Tarentaal Street</p>
-          <p class="town">Makhado Park</p>
-          <p class="Zip">0920</p>
+          <p class="streetAddress">{{this.address}}</p>
+          <p class="town">{{this.town}}</p>
+          <p class="Zip">{{this.zipCode}}</p>
         </div>
         <div class="deliveryMethod">
           <h4 class="methodHead">Delivery Method</h4>
-          <p>Pickup</p>
+          <p>{{this.method}}</p>
         </div>
         <div class="paymentMethod">
           <h4 class="methodHead">Payment Method</h4>
-          <p class="paymentType"><img src="./images/visa-logo-800x450.jpg" class="visaCardLogo" alt="visa"></p>
-          <p class="cardInfo">XXXXXXXXXXXX1234</p>
+          <p class="paymentType"><img src={{this.ntwrkImage}} class="visaCardLogo" alt=""></p>
+          <p class="cardInfo">{{this.cardNumber}}</p>
         </div>
       </div>
       <div class="orderSummary">
         <div>
           <p class="itemTotalLabel summ1">Item(s) total</p>
-          <p class="ItemTotal summ2">R124.00</p>
+          <p class="ItemTotal summ2">{{this.itemsAmount}}</p>
         </div>
         <div>
           <p class="deliveryAmntLabel summ1">Delivery</p>
-          <p class="deliveryAmnt summ2">R50.00</p>
+          <p class="deliveryAmnt summ2">{{this.deliverAmount}}</p>
         </div>
         <hr />
         <div>
           <p class="orderTotalLabel summ1">Order Total</p>
-          <p class="orderTotal summ2">R174.00</p>
+          <p class="orderTotal summ2">{{this.totalAmount}}</p>
         </div>
         <button type="button" class="orderBtn">PLACE ORDER</button>
       </div>
-    </div>
+      {{/each}}
+    </script>
+  <div class="confirmSection hide">
+  </div>
+  <div class="completedSection hide">
+    <img class="completedImge" src="./images/depositphotos_34276657-stock-illustration-cartoon-pizza-slice-running.jpg"
+      alt="">
+    <p class="completedText">
+      Hmmm!Your Order is being prepared and should be ready soon. Sit back and relax. While we
+      prepare your meal, do
+      make sure that you have included everything in your order by checking out our <a href="#menu">MENU</a>,
+      Otherwise check your
+      <a href="">ORDER</a>.
+    </p>
+  </div>
   </div>
   <div class="main">
     <div class="homeSection" id="home">
@@ -225,34 +292,14 @@
           have the best interest for our customers at heart. We have an
           unparalleled taste when it comes to our ingredients of choice.
         </p>
-        <button type="button" class="goToMenuBtn Btn">CHECK OUR MENU</button>
+        <a href="#menu">
+          <button type="button" class="goToMenuBtn Btn">CHECK OUR MENU</button>
+        </a>
       </div>
       <div class="homeImage">
         <img class="pizzaHomeImg" src="./images/pizza-home.jpg" alt="pizza home image" />
       </div>
     </div>
-    <!-- <div class="promoSection">
-          <div class="promotion superHour">
-          <div class="promoName">
-            <p>Super hour</p>
-          </div>
-          </div>
-          <div class="promotion bonanza">
-          <div class="promoName">
-            <p>Bonanza</p>
-          </div>
-          </div>
-          <div class="promotion crazyFriday">
-          <div class="promoName">
-            <p>CrazyFri</p>
-          </div>
-          </div>
-          <div class="promotion Weekend Something">
-          <div class="promoName">
-            <p>WeekendSomething</p>
-          </div>
-          </div>
-         </div> -->
     <div class="aboutSection" id="about">
       <div class="abtText">
         <h3>About our</h3>
@@ -269,44 +316,37 @@
           while providing the best taste that we remain in the mouths for
           years.
         </p>
-        <button type="button" class="viewFullMenuBtn Btn">
-          VIEW FULL MENU
-        </button>
       </div>
       <div class="abtImg">
-        <img class="pizzaAbtImg" src="./images/abt-img.jpg" alt="pizza about image" />
+        <img class="pizzaAbtImg" src="./images/About-our-pizza.jpg" alt="pizza about image" />
       </div>
     </div>
+    <script>
+      function data(product, ingredients) {
+        let dataObject = {}
+        dataObject = {
+          'event': 'item_view',
+          'product': product,
+          'ingredients': ingredients,
+        }
+        dataLayer.push(dataObject)
+      }
+    </script>
     <script type="text/x-template" class="menuTemplate">
           {{#each item}}
-          <div class="pizza">
+          <div class="pizza" onclick="data('{{this.product}}','{{this.ingredients}}')" id="{{this.product}}">
                <img
                  class="pizzaImg"
                  src={{this.image_url}}
-                 alt="Cheese pizza"
+                 alt="{{this.product}}"
                />
                <p class="pizzaName" id={{this.id}}>{{this.product}}</p>
-               <p class="price smallPrice" id={{this.small_price}}>
-                 Small
-                 <br />
-                 R{{this.small_price}}
-               </p>
-               <p class="price mediumPrice" id={{this.medium_price}}>
-                 Medium
-                 <br />
-                 R{{this.medium_price}}
-               </p>
-               <p class="price largePrice" id={{this.large_price}}>
-                 Large
-                 <br />
-                 R{{this.large_price}}
-               </p>
                <p class="ingredients">{{this.ingredients}}</p>
-               <button type="button" class="addToBasketBtn" id={{this.id}}>
-                 ADD TO BASKET
-               </button>
              </div>
              {{/each}}
+        <button type="button" class="viewFullMenuBtn Btn">
+          VIEW FULL MENU
+        </button>
         </script>
     <div class="menuSection" id="menu">
       <h1 class="menuHead">Menu</h1>
